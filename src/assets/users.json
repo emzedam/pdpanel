@@ -1,0 +1,33 @@
+[
+    {
+        "id":1,
+        "userId": 93681,
+        "userIcon": "/10.jpg",
+        "userName": "علی آزادمند",
+        "userCategories": "مدیر کل",
+        "userStatus":0,
+        "userFeatured": true
+    },
+    {
+        "id":1,
+        "userId": 93681,
+        "userIcon": "/10.jpg",
+        "userName": "محبوب حسین زاده",
+        "userCategories": "کاربر عادی",
+        "userStatus": 1,
+        "userFeatured": true
+    },
+    {
+        "id":1,
+        "userId": 93681,
+        "userIcon": "/10.jpg",
+        "userName": "حسن محمد زاده",
+        "userCategories": "موبایل",
+        "userTags": ["موبایل","لپ تاپ"],
+        "userDate": "1401/02/28",
+        "userStatus":0,
+        "userFeatured": true
+    }
+
+
+]

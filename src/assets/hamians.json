@@ -1,0 +1,34 @@
+[
+    {
+        "id":1,
+        "hamianId": 93681,
+        "hamianIcon": "/10.jpg",
+        "hamianName": "محبوب حسین زاده",
+        "hamianCategories": "سگ ها",
+        "hamianDate":"09030264300",
+        "hamianStatus":0,
+        "hamianFeatured": false,
+        "hamianOutStock": "/out-of-stock.svg",
+        "hamianCopy": "fa-thin fa-copy",
+        "hamianDelete": "fa-thin fa-trash-can",
+        "hamianEdit": "fa-thin fa-edit",
+        "hamianEye": "fa-thin fa-eye"
+    },
+    {
+        "id":1,
+        "hamianId": 93681,
+        "hamianIcon": "/10.jpg",
+        "hamianName": "علی آزادمند",
+        "hamianStoke": false,
+        "hamianCategories": "گربه",
+        "hamianDate": "09142766601",
+        "hamianStatus": 1,
+        "hamianFeatured": true,
+        "hamianCopy": "fa-thin fa-copy",
+        "hamianDelete": "fa-thin fa-trash-can",
+        "hamianEdit": "fa-thin fa-edit",
+        "hamianEye": "fa-thin fa-eye"
+    }
+
+
+]

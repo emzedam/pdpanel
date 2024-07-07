@@ -1,0 +1,34 @@
+[
+    {
+        "id":1,
+        "gararId": 93681,
+        "gararIcon": "/10.jpg",
+        "gararName": "قرار ملاقات با حیوانات بی سرپرست شمیرانات",
+        "gararCategories": "شمیرانات",
+        "gararDate":0,
+        "gararStatus":0,
+        "gararFeatured": false,
+        "gararOutStock": "/out-of-stock.svg",
+        "gararCopy": "fa-thin fa-copy",
+        "gararDelete": "fa-thin fa-trash-can",
+        "gararEdit": "fa-thin fa-edit",
+        "gararEye": "fa-thin fa-eye"
+    },
+    {
+        "id":1,
+        "gararId": 93681,
+        "gararIcon": "/10.jpg",
+        "gararName": "قرار ملاقات با پرندگان دشت لاله",
+        "gararStoke": false,
+        "gararCategories": "هشتگرد",
+        "gararDate": 1,
+        "gararStatus": 1,
+        "gararFeatured": true,
+        "gararCopy": "fa-thin fa-copy",
+        "gararDelete": "fa-thin fa-trash-can",
+        "gararEdit": "fa-thin fa-edit",
+        "gararEye": "fa-thin fa-eye"
+    }
+
+
+]
