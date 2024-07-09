@@ -47,26 +47,6 @@
           </li>
   
           <li>
-            <router-link to="/help" class="active">
-              <!-- هنگام اکتیو ایتم -->
-              <!-- text-white bg-gradient-to-r  from-green-400/70 to-green-500 via-primary/50 -->
-              <button
-                class="middle none font-fa font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-2 rounded-lg active:opacity-[0.85] active:bg-green-50/20 focus:bg-gray-100 focus:text-gray-500 text-gray-500 w-full flex justify-between items-center gap-4 px-4 capitalize"
-                type="button"
-              >
-                <span class="pr-1">
-                  <i class="fa-light fa-dollar text-[18px]"></i>
-                </span>
-                <p
-                  class="block w-full text-base antialiased font-medium leading-relaxed text-right capitalize font-fa"
-                >
-                  کمک های مالی
-                </p>
-              </button>
-            </router-link>
-          </li>
-  
-          <li>
             <button
               @click="openSubMenu(0)"
               class="middle none font-fa font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-2 rounded-lg text-gray-500 active:opacity-[0.85] active:bg-green-50/20 focus:bg-gray-100 focus:text-gray-500 w-full flex justify-between items-center gap-4 px-4 capitalize"
@@ -218,73 +198,6 @@
               </div>
             </collapse-transition>
           </li>
-
-          <li>
-            <button
-              @click="openSubMenu(12)"
-              class="middle none font-fa font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-2 rounded-lg text-gray-500 active:opacity-[0.85] active:bg-green-50/20 focus:bg-gray-100 focus:text-gray-500 w-full flex justify-between items-center gap-4 px-4 capitalize"
-              type="button"
-            >
-              <span class="pr-1">
-                <i class="fa-light fa-video text-[18px] text-slate-500"></i>
-              </span>
-              <p
-                class="block w-full text-base antialiased font-medium leading-relaxed text-right capitalize font-fa"
-              >
-                مستندات حمایت
-              </p>
-              <i
-                :class="submenuIndex == 12 ? 'fa-chevron-down' : 'fa-chevron-left'"
-                class="fa-light text-[15px] text-slate-500"
-              ></i>
-            </button>
-            <!-- Dropdown menu -->
-            <collapse-transition>
-              <div v-if="submenuIndex == 12" class="z-10 px-1 font-fa">
-                <ul
-                  class="text-sm text-gray-700 dark:text-gray-400"
-                  aria-labelledby="dropdownNavbarButton"
-                >
-                  <li>
-                    <RouterLink to="/add-mostanad">
-                      <span
-                        class="flex items-center justify-between w-full gap-4 px-4 py-2 text-xs font-bold text-gray-500 capitalize transition-all rounded-lg middle none font-fa center disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none bg-gradient-to-r"
-                      >
-                        <span class="pr-1">
-                          <i
-                            class="fa-light fa-draw-circle text-[12px] text-gray-500"
-                          ></i>
-                        </span>
-                        <p
-                          class="block w-full text-base antialiased font-medium leading-relaxed text-right capitalize font-fa"
-                        >
-                          افزودن مستند جدید
-                        </p>
-                      </span>
-                    </RouterLink>
-                  </li>
-                  <li>
-                    <RouterLink to="/mostanadat">
-                      <span
-                        class="flex items-center justify-between w-full gap-4 px-4 py-2 text-xs font-bold text-gray-500 capitalize transition-all rounded-lg middle none font-fa center disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none bg-gradient-to-r"
-                      >
-                        <span class="pr-1">
-                          <i
-                            class="fa-light fa-draw-circle text-[12px] text-gray-500"
-                          ></i>
-                        </span>
-                        <p
-                          class="block w-full text-base antialiased font-medium leading-relaxed text-right capitalize font-fa"
-                        >
-                          همه مستندات
-                        </p>
-                      </span>
-                    </RouterLink>
-                  </li>
-                </ul>
-              </div>
-            </collapse-transition>
-          </li>
   
           <li>
             <button
@@ -293,17 +206,17 @@
               type="button"
             >
               <span class="pr-1">
-                <i
-                  class="fa-light fa-handshake-angle text-[18px] text-slate-500"
-                ></i>
+                <i class="fa-light fa-users text-[18px] text-slate-500"></i>
               </span>
               <p
                 class="block w-full text-base antialiased font-medium leading-relaxed text-right capitalize font-fa"
               >
-                قرارهای مهربانی
+                مدیران سایت
               </p>
               <i
-                :class="submenuIndex == 2 ? 'fa-chevron-down' : 'fa-chevron-left'"
+                :class="
+                  submenuIndex == 2 ? 'fa-chevron-down' : 'fa-chevron-left'
+                "
                 class="fa-light text-[15px] text-slate-500"
               ></i>
             </button>
@@ -315,7 +228,7 @@
                   aria-labelledby="dropdownNavbarButton"
                 >
                   <li>
-                    <RouterLink to="/add-garar">
+                    <RouterLink to="/add-admin">
                       <span
                         class="flex items-center justify-between w-full gap-4 px-4 py-2 text-xs font-bold text-gray-500 capitalize transition-all rounded-lg middle none font-fa center disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none bg-gradient-to-r"
                       >
@@ -327,13 +240,13 @@
                         <p
                           class="block w-full text-base antialiased font-medium leading-relaxed text-right capitalize font-fa"
                         >
-                          افزودن قرار جدید
+                          افزودن مدیر جدید
                         </p>
                       </span>
                     </RouterLink>
                   </li>
                   <li>
-                    <RouterLink to="/gararha">
+                    <RouterLink to="/admins">
                       <span
                         class="flex items-center justify-between w-full gap-4 px-4 py-2 text-xs font-bold text-gray-500 capitalize transition-all rounded-lg middle none font-fa center disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none bg-gradient-to-r"
                       >
@@ -345,88 +258,20 @@
                         <p
                           class="block w-full text-base antialiased font-medium leading-relaxed text-right capitalize font-fa"
                         >
-                          همه قرارها
+                          همه مدیر ها
                         </p>
                       </span>
                     </RouterLink>
                   </li>
+
                 </ul>
               </div>
             </collapse-transition>
           </li>
-  
+
           <li>
             <button
               @click="openSubMenu(3)"
-              class="middle none font-fa font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-2 rounded-lg text-gray-500 active:opacity-[0.85] active:bg-green-50/20 focus:bg-gray-100 focus:text-gray-500 w-full flex justify-between items-center gap-4 px-4 capitalize"
-              type="button"
-            >
-              <span class="pr-1">
-                <i
-                  class="fa-light fa-people-group text-[18px] text-slate-500"
-                ></i>
-              </span>
-              <p
-                class="block w-full text-base antialiased font-medium leading-relaxed text-right capitalize font-fa"
-              >
-                حامیان
-              </p>
-              <i
-                :class="submenuIndex == 3 ? 'fa-chevron-down' : 'fa-chevron-left'"
-                class="fa-light text-[15px] text-slate-500"
-              ></i>
-            </button>
-            <!-- Dropdown menu -->
-            <collapse-transition>
-              <div v-if="submenuIndex == 3" class="z-10 px-1 font-fa">
-                <ul
-                  class="text-sm text-gray-700 dark:text-gray-400"
-                  aria-labelledby="dropdownNavbarButton"
-                >
-                  <li>
-                    <RouterLink to="/add-hami">
-                      <span
-                        class="flex items-center justify-between w-full gap-4 px-4 py-2 text-xs font-bold text-gray-500 capitalize transition-all rounded-lg middle none font-fa center disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none bg-gradient-to-r"
-                      >
-                        <span class="pr-1">
-                          <i
-                            class="fa-light fa-draw-circle text-[12px] text-gray-500"
-                          ></i>
-                        </span>
-                        <p
-                          class="block w-full text-base antialiased font-medium leading-relaxed text-right capitalize font-fa"
-                        >
-                          اضافه کردن حامی جدید
-                        </p>
-                      </span>
-                    </RouterLink>
-                  </li>
-                  <li>
-                    <RouterLink to="/hamian">
-                      <span
-                        class="flex items-center justify-between w-full gap-4 px-4 py-2 text-xs font-bold text-gray-500 capitalize transition-all rounded-lg middle none font-fa center disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none bg-gradient-to-r"
-                      >
-                        <span class="pr-1">
-                          <i
-                            class="fa-light fa-draw-circle text-[12px] text-gray-500"
-                          ></i>
-                        </span>
-                        <p
-                          class="block w-full text-base antialiased font-medium leading-relaxed text-right capitalize font-fa"
-                        >
-                          همه حامیان
-                        </p>
-                      </span>
-                    </RouterLink>
-                  </li>
-                </ul>
-              </div>
-            </collapse-transition>
-          </li>
-  
-          <li>
-            <button
-              @click="openSubMenu(11)"
               class="middle none font-fa font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-2 rounded-lg text-gray-500 active:opacity-[0.85] active:bg-green-50/20 focus:bg-gray-100 focus:text-gray-500 w-full flex justify-between items-center gap-4 px-4 capitalize"
               type="button"
             >
@@ -440,14 +285,14 @@
               </p>
               <i
                 :class="
-                  submenuIndex == 11 ? 'fa-chevron-down' : 'fa-chevron-left'
+                  submenuIndex == 3 ? 'fa-chevron-down' : 'fa-chevron-left'
                 "
                 class="fa-light text-[15px] text-slate-500"
               ></i>
             </button>
             <!-- Dropdown menu -->
             <collapse-transition>
-              <div v-if="submenuIndex == 11" class="z-10 px-1 font-fa">
+              <div v-if="submenuIndex == 3" class="z-10 px-1 font-fa">
                 <ul
                   class="text-sm text-gray-700 dark:text-gray-400"
                   aria-labelledby="dropdownNavbarButton"
@@ -483,7 +328,7 @@
                         <p
                           class="block w-full text-base antialiased font-medium leading-relaxed text-right capitalize font-fa"
                         >
-                          همه کاربران
+                          همه کاربر ها
                         </p>
                       </span>
                     </RouterLink>
@@ -513,24 +358,7 @@
               </button>
             </router-link>
           </li>
-  
-          <li>
-            <router-link to="/setting/">
-              <button
-                class="middle none font-fa font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-2 rounded-lg text-gray-500 active:opacity-[0.85] active:bg-green-50/20 focus:bg-gray-100 focus:text-gray-500 w-full flex justify-between items-center gap-4 px-4 capitalize"
-                type="button"
-              >
-                <span class="pr-1">
-                  <i class="fa-light fa-gear text-[18px] text-slate-500"></i>
-                </span>
-                <p
-                  class="block w-full text-base antialiased font-medium leading-relaxed text-right capitalize font-fa"
-                >
-                  تنظیمات سایت
-                </p>
-              </button>
-            </router-link>
-          </li>
+
         </ul>
       </div>
     </nav>

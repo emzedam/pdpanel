@@ -67,7 +67,7 @@
             <div class="relative inline-block">
               <i class="text-2xl fa-light fa-credit-card"></i>
               <span
-                class="flex justify-center absolute -top-2 ltr:-right-1 rtl:-left-1 text-center bg-pink-500 px-1 text-white rounded-full text-xs"
+                class="flex justify-center absolute -top-2 ltr:-right-1 rtl:-left-1 text-center bg-orange-500 px-1 text-white rounded-full text-xs"
                 ><span class="align-self-center">3</span></span
               >
             </div>
@@ -85,7 +85,7 @@
             <div class="relative inline-block">
               <i class="text-2xl fa-light fa-bell"></i>
               <span
-                class="flex justify-center absolute -top-2 ltr:-right-1 rtl:-left-1 text-center bg-pink-500 px-1 text-white rounded-full text-xs"
+                class="flex justify-center absolute -top-2 ltr:-right-1 rtl:-left-1 text-center bg-orange-500 px-1 text-white rounded-full text-xs"
                 ><span class="align-self-center">3</span></span
               >
             </div>
@@ -273,7 +273,7 @@
 </template>
 
 <script setup>
-    import {ref , onMounted , computed} from 'vue'
+    import {ref , onMounted , computed , inject} from 'vue'
     import {useStore} from 'vuex'
     import {useRouter} from 'vue-router'
     import Swal from 'sweetalert2'
@@ -287,6 +287,22 @@
 
     const authadmin = computed(() => {
       return store.getters["get_authadmin"]
+    })
+
+    onMounted(() => {
+      const echo = inject('$echo');
+      if (echo) {
+        echo.channel('notifications')
+          .listen('PostNeedsApprovalEvent', (event) => {
+              console.log('A new post needs approval:', event);
+              // نمایش اعلان در داشبورد مدیریت
+          });
+      }
+      // Echo.channel('notifications')
+      //   .listen('PostNeedsApproval', (event) => {
+      //       console.log('A new post needs approval:', event);
+      //       // نمایش اعلان در داشبورد مدیریت
+      //   });
     })
    
     const open_navmenu_action = () => {

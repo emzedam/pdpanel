@@ -4,6 +4,8 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from "./router";
 import VueCookies from 'vue3-cookies'
+import { useCookies } from "vue3-cookies";
+const { cookies } = useCookies();
 import axios from '@/axios'
 import store from './store/index.js'
 import Default from '@/layouts/Default.vue'
@@ -15,7 +17,26 @@ import "@/assets/css/vue-quill.snow.css";
 import persionToEnglish from '../plugins/persionToEnglish.js'
 
 
+import Echo from 'laravel-echo';
+import Pusher from 'pusher-js';
+
+const echo = new Echo({
+    broadcaster: 'pusher',
+    key: '87543cca355daa4c6d73',
+    cluster: 'mt1',
+    encrypted: true,
+    authEndpoint: 'https://apiblog.petoman.com/broadcasting/auth',  // تنظیم مسیر صحیح احراز هویت
+    auth: {
+        headers: {
+            Authorization: `Bearer ${cookies.get("_token")}` // اگر نیاز به توکن احراز هویت دارید
+        }
+    }
+});
+
+
 const app = createApp(App)
+
+app.provide('$echo', echo);
 app.config.globalProperties.globalUrl = 'https://hamiapi.petoman.com/'
 
 

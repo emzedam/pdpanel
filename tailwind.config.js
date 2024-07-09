@@ -68,7 +68,7 @@ module.exports = {
     },
     colors: {
       nightbg:"#26283b",
-      hamian:"#9d2c48",
+      hamian:"#ea580c",
       nightbox:"#303248",
       primary: "#22c55e",
       muted:"#64748b",

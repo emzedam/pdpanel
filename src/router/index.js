@@ -6,18 +6,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Login from "../views/Auth/Login.vue";
 
 import HomeView from '../views/HomeView.vue'
-import SettingView from '../views/SettingView.vue'
 import ThemeView from '../views/ThemeView.vue'
-import HelpDetailView from '../views/HelpDetailView.vue'
-import Help from '../views/HelpView.vue'
-// قرارها
-import AddGarar from '../views/Gararha/AddGararView.vue'
-import EditGarar from '../views/Gararha/EditGararView.vue'
-import Gararha from '../views/Gararha/GararhaView.vue'
-// حامیان
-import Hamian from '../views/Hamian/HamianView.vue'
-import AddHamian from '../views/Hamian/AddHamiView.vue'
-import EditHamian from '../views/Hamian/EditHamiView.vue'
+
 // صفحات
 import AddPage from '../views/Pages/AddPageView.vue'
 import EditPage from '../views/Pages/EditPageView.vue'
@@ -26,14 +16,17 @@ import Pages from '../views/Pages/PagesView.vue'
 import AddNews from '../views/News/AddNewsView.vue'
 import EditNews from '../views/News/EditNewsView.vue'
 import News from '../views/News/NewsView.vue'
-// مستندات
-import AddMostanad from '../views/Mostanad/AddMostanad.vue'
-import EditMostanad from '../views/Mostanad/EditMostanad.vue'
-import Mostanadat from '../views/Mostanad/Mostanadat.vue'
+
+// ادمین ها
+import AddAdmin from '../views/Admins/AddUserView.vue'
+import AdminProfileView from '../views/Admins/ProfileView.vue'
+import AdminsView from '../views/Admins/UsersView.vue'
+
 // کاربران
-import AddUser from '../views/Users/AddUserView.vue'
-import ProfileView from '../views/Users/ProfileView.vue'
-import UsersView from '../views/Users/UsersView.vue'
+import Users from '../views/Users/users.vue'
+import viewUser from '../views/Users/userView.vue'
+import EditUser from '../views/Users/edit-user.vue'
+import AddUser from '../views/Users/add-new-user.vue'
 
 // دسته بندی ها
 import AddCategory from '../views/Category/Add.vue'
@@ -60,55 +53,10 @@ const router = createRouter({
       name: 'home',
       component: HomeView,
       meta: { requiresAuth: true }
-    },{
-      path: '/setting',
-      name: 'setting',
-      component:SettingView,
-      meta: { requiresAuth: true }
     }, {
       path: '/theme',
       name: 'theme',
       component:ThemeView,
-      meta: { requiresAuth: true }
-    }, {
-      path: '/help',
-      name: 'help',
-      component:Help,
-      meta: { requiresAuth: true }
-    }, {
-      path: '/detail/:id',
-      name: 'detail',
-      component:HelpDetailView,
-      meta: { requiresAuth: true }
-    }, {
-      path: '/add-garar',
-      name: 'AddGarar',
-      component: AddGarar,
-      meta: { requiresAuth: true }
-    }, {
-      path: '/edit-garar/:id',
-      name: 'EditGarar',
-      component:EditGarar,
-      meta: { requiresAuth: true }
-    }, {
-      path: '/gararha',
-      name: 'Gararha',
-      component:Gararha,
-      meta: { requiresAuth: true }
-    }, {
-      path: '/hamian',
-      name: 'Hamian',
-      component:Hamian,
-      meta: { requiresAuth: true }
-    }, {
-      path: '/add-hami',
-      name: 'AddHamian',
-      component:AddHamian,
-      meta: { requiresAuth: true }
-    }, {
-      path: '/edit-hami/:id',
-      name: 'EditHamian',
-      component:EditHamian,
       meta: { requiresAuth: true }
     }, {
       path: '/add-page',
@@ -136,21 +84,6 @@ const router = createRouter({
       component:EditNews,
       meta: { requiresAuth: true }
     }, {
-      path: '/add-mostanad',
-      name: 'AddMostanad',
-      component:AddMostanad,
-      meta: { requiresAuth: true }
-    }, {
-      path: '/edit-mostanad/:id',
-      name: 'EditMostanad',
-      component:EditMostanad,
-      meta: { requiresAuth: true }
-    }, {
-      path: '/mostanadat',
-      name: 'Mostanadat',
-      component:Mostanadat,
-      meta: { requiresAuth: true }
-    }, {
       path: '/add-category',
       name: 'AddCategory',
       component:AddCategory,
@@ -166,19 +99,40 @@ const router = createRouter({
       component:News,
       meta: { requiresAuth: true }
     }, {
+      path: '/add-admin',
+      name: 'AddAdmin',
+      component:AddAdmin,
+      meta: { requiresAuth: true }
+    }, {
+      path: '/admin/profile/:id',
+      name: 'Profile',
+      component:AdminProfileView,
+      meta: { requiresAuth: true }
+    }, {
+      path: '/admins',
+      name: 'admins',
+      component:AdminsView,
+      meta: { requiresAuth: true }
+    },,
+    {
+      path: '/users',
+      name: 'Users',
+      component:Users,
+      meta: { requiresAuth: true }
+    },{
       path: '/add-user',
       name: 'AddUser',
       component:AddUser,
       meta: { requiresAuth: true }
     }, {
-      path: '/profile/:id',
-      name: 'Profile',
-      component:ProfileView,
+      path: '/user/profile/:id',
+      name: 'viewUser',
+      component:viewUser,
       meta: { requiresAuth: true }
     }, {
-      path: '/users',
-      name: 'Users',
-      component:UsersView,
+      path: '/edit-user/:id',
+      name: 'EditUser',
+      component: EditUser,
       meta: { requiresAuth: true }
     },{
       path: "/:notFound",

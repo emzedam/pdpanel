@@ -52,54 +52,6 @@ const store = createStore({
         return send_for_logout;
       },
 
-      // donations
-      async get_donations_list(context) {
-        const token = cookies.get("_token")
-        const result = await HTTP.get("/admin/donations/list" ,{
-          headers: {
-            "Authorization": "Bearer "+ token
-          }
-        })
-
-        if(result.status == 200){
-            if(result.data){
-                return result.data
-            }else{
-                return {
-                    "message": "failed"
-                }
-            }
-        }else{
-            return {
-                "message": "failed"
-            }
-        }
-      },
-
-      async get_donation(context , data){
-        const token = cookies.get("_token")
-        const result = await HTTP.get("/admin/donations/get-by-id" ,{
-          headers: {
-            "Authorization": "Bearer "+ token
-          },
-          params: data
-        })
-
-        if(result.status == 200){
-            if(result.data){
-                return result.data
-            }else{
-                return {
-                    "message": "failed"
-                }
-            }
-        }else{
-            return {
-                "message": "failed"
-            }
-        }
-      },
-
       // categories
       async get_categories_list(context) {
         const token = cookies.get("_token")
@@ -236,7 +188,7 @@ const store = createStore({
         formData.append("keywords" , data.keywords)
 
 
-        const result = await HTTP.post("/admin/news/save", formData ,{
+        const result = await HTTP.post("/admin/admin-posts/save", formData ,{
           headers: {
             "Authorization": "Bearer "+ token
           }
@@ -259,7 +211,7 @@ const store = createStore({
 
       async get_news_list(context) {
         const token = cookies.get("_token")
-        const result = await HTTP.get("/admin/news/get" ,{
+        const result = await HTTP.get("/admin/admin-posts/get" ,{
           headers: {
             "Authorization": "Bearer "+ token
           }
@@ -282,7 +234,7 @@ const store = createStore({
 
       async change_news_special_state(context , data){
         const token = cookies.get("_token")
-        const result = await HTTP.post("/admin/news/special", data ,{
+        const result = await HTTP.post("/admin/admin-posts/special", data ,{
           headers: {
             "Authorization": "Bearer "+ token
           }
@@ -305,7 +257,7 @@ const store = createStore({
 
       async delete_list_of_news(context , data) {
         const token = cookies.get("_token")
-        const result = await HTTP.post("/admin/news/del-group", data ,{
+        const result = await HTTP.post("/admin/admin-posts/del-group", data ,{
           headers: {
             "Authorization": "Bearer "+ token
           }
@@ -328,7 +280,7 @@ const store = createStore({
 
       async delete_news(context , data) {
         const token = cookies.get("_token")
-        const result = await HTTP.post("/admin/news/delete", data ,{
+        const result = await HTTP.post("/admin/admin-posts/delete", data ,{
           headers: {
             "Authorization": "Bearer "+ token
           }
@@ -351,7 +303,7 @@ const store = createStore({
 
       async get_news_detail(context , data){
         const token = cookies.get("_token")
-        const result = await HTTP.get("/admin/news/get-detail" ,{
+        const result = await HTTP.get("/admin/admin-posts/get-detail" ,{
           headers: {
             "Authorization": "Bearer "+ token
           },
@@ -396,209 +348,7 @@ const store = createStore({
         formData.append("keywords" , data.keywords)
 
 
-        const result = await HTTP.post("/admin/news/edit", formData ,{
-          headers: {
-            "Authorization": "Bearer "+ token
-          }
-        })
-
-        if(result.status == 200){
-            if(result.data){
-                return result.data
-            }else{
-                return {
-                  "message": "failed"
-                }
-            }
-        }else{
-            return {
-                "message": "failed"
-            }
-        }
-      },
-
-      // mostanadat
-      async save_mostanad_data(context , data){
-        const token = cookies.get("_token")
-        let formData = new FormData()
-
-        formData.append("title" , data.title)
-        formData.append("slug" , data.slug)
-        formData.append("date" , data.date)
-        formData.append("author_id" , data.author_id)
-        formData.append("image" , data.image)
-        formData.append("content" , data.content)
-        formData.append("summary_description" , data.summary_description)
-        formData.append("seo_image" , data.seo_image)
-        formData.append("video" , data.video)
-        formData.append("meta_title" , data.meta_title)
-        formData.append("meta_description" , data.meta_description)
-        formData.append("keywords" , data.keywords)
-
-
-        const result = await HTTP.post("/admin/mostanad/save", formData ,{
-          headers: {
-            "Authorization": "Bearer "+ token
-          }
-        })
-
-        if(result.status == 200){
-            if(result.data){
-                return result.data
-            }else{
-                return {
-                  "message": "failed"
-                }
-            }
-        }else{
-            return {
-                "message": "failed"
-            }
-        }
-      },
-
-      async get_mostanad_list(context) {
-        const token = cookies.get("_token")
-        const result = await HTTP.get("/admin/mostanad/get" ,{
-          headers: {
-            "Authorization": "Bearer "+ token
-          }
-        })
-
-        if(result.status == 200){
-            if(result.data){
-                return result.data
-            }else{
-                return {
-                    "message": "failed"
-                }
-            }
-        }else{
-            return {
-                "message": "failed"
-            }
-        }
-      },
-
-      async change_mostanad_special_state(context , data){
-        const token = cookies.get("_token")
-        const result = await HTTP.post("/admin/mostanad/special", data ,{
-          headers: {
-            "Authorization": "Bearer "+ token
-          }
-        })
-
-        if(result.status == 200){
-            if(result.data){
-                return result.data
-            }else{
-                return {
-                  "message": "failed"
-                }
-            }
-        }else{
-            return {
-                "message": "failed"
-            }
-        }
-      },
-
-      async delete_list_of_mostanad(context , data){
-        const token = cookies.get("_token")
-        const result = await HTTP.post("/admin/mostanad/del-group", data ,{
-          headers: {
-            "Authorization": "Bearer "+ token
-          }
-        })
-
-        if(result.status == 200){
-            if(result.data){
-                return result.data
-            }else{
-                return {
-                  "message": "failed"
-                }
-            }
-        }else{
-            return {
-                "message": "failed"
-            }
-        }
-      },
-
-      async delete_mostanad(context , data){
-        const token = cookies.get("_token")
-        const result = await HTTP.post("/admin/mostanad/delete", data ,{
-          headers: {
-            "Authorization": "Bearer "+ token
-          }
-        })
-
-        if(result.status == 200){
-            if(result.data){
-                return result.data
-            }else{
-                return {
-                  "message": "failed"
-                }
-            }
-        }else{
-            return {
-                "message": "failed"
-            }
-        }
-      },
-
-      async get_mostanad_detail(context , data){
-        const token = cookies.get("_token")
-        const result = await HTTP.get("/admin/mostanad/get-detail" ,{
-          headers: {
-            "Authorization": "Bearer "+ token
-          },
-          params: data
-        })
-
-        if(result.status == 200){
-            if(result.data){
-                return result.data
-            }else{
-                return {
-                  "message": "failed"
-                }
-            }
-        }else{
-            return {
-                "message": "failed"
-            }
-        }
-      },
-
-      async edit_mostanad_data(context , data){
-        const token = cookies.get("_token")
-        let formData = new FormData()
-
-        formData.append("id" , data.id)
-        formData.append("title" , data.title)
-        formData.append("slug" , data.slug)
-        formData.append("date" , data.date)
-        formData.append("author_id" , data.author_id)
-        if(data.image != '') {
-          formData.append("image" , data.image)
-        }
-        if(data.video != '') {
-          formData.append("video" , data.video)
-        }
-        formData.append("content" , data.content)
-        formData.append("summary_description" , data.summary_description)
-        if(data.seo_image != '') {
-          formData.append("seo_image" , data.seo_image)
-        }
-        formData.append("meta_title" , data.meta_title)
-        formData.append("meta_description" , data.meta_description)
-        formData.append("keywords" , data.keywords)
-
-
-        const result = await HTTP.post("/admin/mostanad/edit", formData ,{
+        const result = await HTTP.post("/admin/admin-posts/edit", formData ,{
           headers: {
             "Authorization": "Bearer "+ token
           }
@@ -789,7 +539,7 @@ const store = createStore({
       },
 
       // users
-      async save_user_data(context , data){
+      async save_admin_data(context , data){
         const token = cookies.get("_token")
         let formData = new FormData()
 
@@ -803,7 +553,7 @@ const store = createStore({
         formData.append("role" , data.role)
 
 
-        const result = await HTTP.post("/admin/users/save", formData ,{
+        const result = await HTTP.post("/admin/admins/save", formData ,{
           headers: {
             "Authorization": "Bearer "+ token
           }
@@ -824,9 +574,9 @@ const store = createStore({
         }
       },
 
-      async get_users_list(context) {
+      async get_admins_list(context) {
         const token = cookies.get("_token")
-        const result = await HTTP.get("/admin/users/get" ,{
+        const result = await HTTP.get("/admin/admins/get" ,{
           headers: {
             "Authorization": "Bearer "+ token
           }
@@ -847,9 +597,9 @@ const store = createStore({
         }
       },
 
-      async delete_user(context , data){
+      async delete_admin(context , data){
         const token = cookies.get("_token")
-        const result = await HTTP.post("/admin/users/delete", data ,{
+        const result = await HTTP.post("/admin/admins/delete", data ,{
           headers: {
             "Authorization": "Bearer "+ token
           }
@@ -870,9 +620,9 @@ const store = createStore({
         }
       },
 
-      async delete_list_of_users(context , data){
+      async delete_list_of_admins(context , data){
         const token = cookies.get("_token")
-        const result = await HTTP.post("/admin/users/del-group", data ,{
+        const result = await HTTP.post("/admin/admins/del-group", data ,{
           headers: {
             "Authorization": "Bearer "+ token
           }
@@ -893,9 +643,9 @@ const store = createStore({
         }
       },
 
-      async change_user_account_status(context , data){
+      async change_admin_account_status(context , data){
         const token = cookies.get("_token")
-        const result = await HTTP.post("/admin/users/chac-status", data ,{
+        const result = await HTTP.post("/admin/admins/chac-status", data ,{
           headers: {
             "Authorization": "Bearer "+ token
           }
@@ -916,9 +666,9 @@ const store = createStore({
         }
       },
 
-      async get_user_detail(context , data){
+      async get_admin_detail(context , data){
         const token = cookies.get("_token")
-        const result = await HTTP.get("/admin/users/get-detail" ,{
+        const result = await HTTP.get("/admin/admins/get-detail" ,{
           headers: {
             "Authorization": "Bearer "+ token
           },
@@ -940,7 +690,7 @@ const store = createStore({
         }
       },
 
-      async edit_user_data(context , data){
+      async edit_admin_data(context , data){
         const token = cookies.get("_token")
         let formData = new FormData()
 
@@ -959,7 +709,7 @@ const store = createStore({
         formData.append("role" , data.role)
 
 
-        const result = await HTTP.post("/admin/users/edit", formData ,{
+        const result = await HTTP.post("/admin/admins/edit", formData ,{
           headers: {
             "Authorization": "Bearer "+ token
           }
@@ -980,13 +730,13 @@ const store = createStore({
         }
       },
 
-      // supporters
-      async get_favorite_animals_category(context) {
+      // users api
+      async get_users_list(context){
         const token = cookies.get("_token")
-        const result = await HTTP.get("/admin/supporters/fav-anims-cat" ,{
+        const result = await HTTP.get("/admin/users/users-list" , {
           headers: {
-            "Authorization": "Bearer "+ token
-          }
+                "Authorization": "Bearer "+ token
+            }
         })
 
         if(result.status == 200){
@@ -994,7 +744,7 @@ const store = createStore({
                 return result.data
             }else{
                 return {
-                  "message": "failed"
+                    "message": "failed"
                 }
             }
         }else{
@@ -1004,9 +754,10 @@ const store = createStore({
         }
       },
 
-      async get_activity_animals_category(context) {
+      async get_user(context , data){
         const token = cookies.get("_token")
-        const result = await HTTP.get("/admin/supporters/act-anims-cat" ,{
+        const result = await HTTP.get("/admin/users/user" , {
+          params: {id: data.id},
           headers: {
             "Authorization": "Bearer "+ token
           }
@@ -1017,7 +768,7 @@ const store = createStore({
                 return result.data
             }else{
                 return {
-                  "message": "failed"
+                    "message": "failed"
                 }
             }
         }else{
@@ -1025,546 +776,124 @@ const store = createStore({
                 "message": "failed"
             }
         }
+      },
+
+      async create_user_account(context , data){
+        const token = cookies.get("_token")
+          const result = await HTTP.post("/admin/users/create" , data , {
+            headers: {
+              "Authorization": "Bearer "+ token
+            }
+          })
+
+          if(result.status == 200){
+              if(result.data){
+                  return result.data
+              }else{
+                  return {
+                      "message": "failed"
+                  }
+              }
+          }else{
+              return {
+                  "message": "failed"
+              }
+          }
+      },
+
+      async edit_user_account(context , data){
+        const token = cookies.get("_token")
+          const result = await HTTP.post("/admin/users/edit" , data , {
+            headers: {
+              "Authorization": "Bearer "+ token
+            }
+          })
+
+          if(result.status == 200){
+              if(result.data){
+                  return result.data
+              }else{
+                  return {
+                      "message": "failed"
+                  }
+              }
+          }else{
+              return {
+                  "message": "failed"
+              }
+          }
+      },
+
+      async remove_user(context , data){
+        const token = cookies.get("_token")
+          const result = await HTTP.post("/admin/users/remove" , data , {
+            headers: {
+              "Authorization": "Bearer "+ token
+            }
+          })
+
+          if(result.status == 200){
+              if(result.data){
+                return result.data
+              }else{
+                return {
+                  "message": "failed"
+                }
+              }
+          }else{
+            return {
+                "message": "failed"
+            }
+          }
+      },
+
+      async do_block_user_account(context , data){
+        const token = cookies.get("_token")
+          const result = await HTTP.post("/admin/users/block" , data ,{
+            headers: {
+              "Authorization": "Bearer "+ token
+            }
+          })
+
+          if(result.status == 200){
+              if(result.data){
+                  return result.data
+              }else{
+                  return {
+                      "message": "failed"
+                  }
+              }
+          }else{
+              return {
+                  "message": "failed"
+              }
+          }
       },
       
-      async add_new_supporter(context , data){
+      async change_user_password(context , data){
         const token = cookies.get("_token")
-        let formData = new FormData()
+          const result = await HTTP.post("/admin/users/change-pass" , data ,{
+            headers: {
+              "Authorization": "Bearer "+ token
+            }
+          })
 
-
-        formData.append("fullName" , data.fullName)
-        formData.append("slug" , data.slug)
-        formData.append("mobile" , data.mobile)
-        formData.append("faveorite_animal" , data.faveorite_animal.ids)
-        formData.append("activity" , data.activity.ids)
-        formData.append("biography" , data.biography)
-
-        if(data.socials.length != 0){
-          for(let i=0; i < data.socials.length; i++){
-            formData.append("socials["+i+"]" , JSON.stringify(data.socials[i]))
-          }
-        }else {
-          formData.append("socials" , "")
-        }
-
-        formData.append("profile_image" , data.profile_image)
-
-
-        const result = await HTTP.post("/admin/supporters/save", formData ,{
-          headers: {
-            "Authorization": "Bearer "+ token
-          }
-        })
-
-        if(result.status == 200){
-            if(result.data){
-                return result.data
-            }else{
-              return {
-                "message": "failed"
+          if(result.status == 200){
+              if(result.data){
+                  return result.data
+              }else{
+                  return {
+                      "message": "failed"
+                  }
               }
-            }
-        }else{
-          return {
-              "message": "failed"
-          }
-        }
-      },
-
-      async add_new_supporter(context , data){
-        const token = cookies.get("_token")
-        let formData = new FormData()
-
-
-        formData.append("fullName" , data.fullName)
-        formData.append("slug" , data.slug)
-        formData.append("mobile" , data.mobile)
-        formData.append("faveorite_animal" , data.faveorite_animal.ids)
-        formData.append("activity" , data.activity.ids)
-        formData.append("biography" , data.biography)
-
-        if(data.socials.length != 0){
-          for(let i=0; i < data.socials.length; i++){
-            formData.append("socials["+i+"]" , JSON.stringify(data.socials[i]))
-          }
-        }else {
-          formData.append("socials" , "")
-        }
-
-        formData.append("profile_image" , data.profile_image)
-
-
-        const result = await HTTP.post("/admin/supporters/save", formData ,{
-          headers: {
-            "Authorization": "Bearer "+ token
-          }
-        })
-
-        if(result.status == 200){
-            if(result.data){
-                return result.data
-            }else{
+          }else{
               return {
-                "message": "failed"
+                  "message": "failed"
               }
-            }
-        }else{
-          return {
-              "message": "failed"
           }
-        }
       },
 
-      async get_supporters_list(context) {
-        const token = cookies.get("_token")
-        const result = await HTTP.get("/admin/supporters/get" ,{
-          headers: {
-            "Authorization": "Bearer "+ token
-          }
-        })
-
-        if(result.status == 200){
-            if(result.data){
-                return result.data
-            }else{
-                return {
-                    "message": "failed"
-                }
-            }
-        }else{
-            return {
-                "message": "failed"
-            }
-        }
-      },
-
-      async delete_list_of_supporters(context , data){
-        const token = cookies.get("_token")
-        const result = await HTTP.post("/admin/supporters/del-group", data ,{
-          headers: {
-            "Authorization": "Bearer "+ token
-          }
-        })
-
-        if(result.status == 200){
-            if(result.data){
-                return result.data
-            }else{
-                return {
-                  "message": "failed"
-                }
-            }
-        }else{
-            return {
-                "message": "failed"
-            }
-        }
-      },
-
-      async delete_supporter(context , data){
-        const token = cookies.get("_token")
-        const result = await HTTP.post("/admin/supporters/delete", data ,{
-          headers: {
-            "Authorization": "Bearer "+ token
-          }
-        })
-
-        if(result.status == 200){
-            if(result.data){
-                return result.data
-            }else{
-                return {
-                  "message": "failed"
-                }
-            }
-        }else{
-            return {
-                "message": "failed"
-            }
-        }
-      },
-
-      async change_supporter_account_status(context , data){
-        const token = cookies.get("_token")
-        const result = await HTTP.post("/admin/supporters/chac-status", data ,{
-          headers: {
-            "Authorization": "Bearer "+ token
-          }
-        })
-
-        if(result.status == 200){
-            if(result.data){
-                return result.data
-            }else{
-                return {
-                  "message": "failed"
-                }
-            }
-        }else{
-            return {
-                "message": "failed"
-            }
-        }
-      },
-
-      async get_supporter_detail(context , data) {
-        const token = cookies.get("_token")
-        const result = await HTTP.get("/admin/supporters/get-detail" ,{
-          headers: {
-            "Authorization": "Bearer "+ token
-          },
-          params: data
-        })
-
-        if(result.status == 200){
-            if(result.data){
-                return result.data
-            }else{
-                return {
-                  "message": "failed"
-                }
-            }
-        }else{
-            return {
-                "message": "failed"
-            }
-        }
-      },
-
-      async edit_supporter(context , data){
-        const token = cookies.get("_token")
-        let formData = new FormData()
-
-        formData.append("id" , data.id)
-        formData.append("fullName" , data.fullName)
-        formData.append("slug" , data.slug)
-        formData.append("mobile" , data.mobile)
-        formData.append("faveorite_animal" , data.faveorite_animal.ids)
-        formData.append("activity" , data.activity.ids)
-        formData.append("biography" , data.biography)
-
-        if(data.socials.length != 0){
-          for(let i=0; i < data.socials.length; i++){
-            formData.append("socials["+i+"]" , JSON.stringify(data.socials[i]))
-          }
-        }else {
-          formData.append("socials" , "")
-        }
-
-        if(data.profile_image != ''){
-          formData.append("profile_image" , data.profile_image)
-        }
-
-
-        const result = await HTTP.post("/admin/supporters/edit", formData ,{
-          headers: {
-            "Authorization": "Bearer "+ token
-          }
-        })
-
-        if(result.status == 200){
-            if(result.data){
-                return result.data
-            }else{
-              return {
-                "message": "failed"
-              }
-            }
-        }else{
-          return {
-              "message": "failed"
-          }
-        }
-      },
-
-      async add_fav_cat(context , data) {
-        const token = cookies.get("_token")
-
-        const result = await HTTP.post("/admin/supporters/add-fav-anims", data ,{
-          headers: {
-            "Authorization": "Bearer "+ token
-          }
-        })
-
-        if(result.status == 200){
-            if(result.data){
-                return result.data
-            }else{
-              return {
-                "message": "failed"
-              }
-            }
-        }else{
-          return {
-              "message": "failed"
-          }
-        }
-      },
-
-      async add_act_cat(context , data) {
-        const token = cookies.get("_token")
-
-        const result = await HTTP.post("/admin/supporters/add-act-anims", data ,{
-          headers: {
-            "Authorization": "Bearer "+ token
-          }
-        })
-
-        if(result.status == 200){
-            if(result.data){
-                return result.data
-            }else{
-              return {
-                "message": "failed"
-              }
-            }
-        }else{
-          return {
-              "message": "failed"
-          }
-        }
-      },
-
-      async delete_supporters_cat(context , data){
-        const token = cookies.get("_token")
-
-        const result = await HTTP.post("/admin/supporters/delete-supprter-cats", data ,{
-          headers: {
-            "Authorization": "Bearer "+ token
-          }
-        })
-
-        if(result.status == 200){
-            if(result.data){
-                return result.data
-            }else{
-              return {
-                "message": "failed"
-              }
-            }
-        }else{
-          return {
-              "message": "failed"
-          }
-        }
-      },
-
-      // appointments
-      async add_new_appointment(context , data){
-        const token = cookies.get("_token")
-        let formData = new FormData()
-
-
-        formData.append("title" , data.title)
-        formData.append("end_date" , data.end_date)
-        formData.append("appointment_time" , data.appointment_time)
-        formData.append("location" , data.location)
-        formData.append("description" , data.description)
-        formData.append("summary_description" , data.summary_description)
-        formData.append("is_main" , data.is_main)
-        formData.append("slug" , data.slug)
-        formData.append("status" , data.status)
-        formData.append("image" , data.image)
-
-        const result = await HTTP.post("/admin/appointments/save", formData ,{
-          headers: {
-            "Authorization": "Bearer "+ token
-          }
-        })
-
-        if(result.status == 200){
-            if(result.data){
-                return result.data
-            }else{
-              return {
-                "message": "failed"
-              }
-            }
-        }else{
-          return {
-              "message": "failed"
-          }
-        }
-      },
-
-      async get_appointment_list(context) {
-        const token = cookies.get("_token")
-        const result = await HTTP.get("/admin/appointments/get" ,{
-          headers: {
-            "Authorization": "Bearer "+ token
-          }
-        })
-
-        if(result.status == 200){
-            if(result.data){
-                return result.data
-            }else{
-                return {
-                    "message": "failed"
-                }
-            }
-        }else{
-            return {
-                "message": "failed"
-            }
-        }
-      },
-
-      async appoint_is_main_status(context , data){
-        const token = cookies.get("_token")
-        const result = await HTTP.post("/admin/appointments/change-main-status", data ,{
-          headers: {
-            "Authorization": "Bearer "+ token
-          }
-        })
-
-        if(result.status == 200){
-            if(result.data){
-                return result.data
-            }else{
-                return {
-                  "message": "failed"
-                }
-            }
-        }else{
-            return {
-                "message": "failed"
-            }
-        }
-      },
-
-      async change_appointment_status(context , data){
-        const token = cookies.get("_token")
-        const result = await HTTP.post("/admin/appointments/change-status", data ,{
-          headers: {
-            "Authorization": "Bearer "+ token
-          }
-        })
-
-        if(result.status == 200){
-            if(result.data){
-                return result.data
-            }else{
-                return {
-                  "message": "failed"
-                }
-            }
-        }else{
-            return {
-                "message": "failed"
-            }
-        }
-      },
-
-      async delete_appointment(context , data){
-        const token = cookies.get("_token")
-        const result = await HTTP.post("/admin/appointments/delete", data ,{
-          headers: {
-            "Authorization": "Bearer "+ token
-          }
-        })
-
-        if(result.status == 200){
-            if(result.data){
-                return result.data
-            }else{
-                return {
-                  "message": "failed"
-                }
-            }
-        }else{
-            return {
-                "message": "failed"
-            }
-        }
-      },
-
-      async delete_list_of_appointments(context , data){
-        const token = cookies.get("_token")
-        const result = await HTTP.post("/admin/appointments/del-group", data ,{
-          headers: {
-            "Authorization": "Bearer "+ token
-          }
-        })
-
-        if(result.status == 200){
-            if(result.data){
-                return result.data
-            }else{
-                return {
-                  "message": "failed"
-                }
-            }
-        }else{
-            return {
-                "message": "failed"
-            }
-        }
-      },
-
-      async get_appointment_detail(context , data){
-        const token = cookies.get("_token")
-        const result = await HTTP.get("/admin/appointments/get-detail" ,{
-          headers: {
-            "Authorization": "Bearer "+ token
-          },
-          params: data
-        })
-
-        if(result.status == 200){
-            if(result.data){
-                return result.data
-            }else{
-                return {
-                  "message": "failed"
-                }
-            }
-        }else{
-            return {
-                "message": "failed"
-            }
-        }
-      },
-
-      async edit_appointment(context , data){
-        const token = cookies.get("_token")
-        let formData = new FormData()
-
-        formData.append("id" , data.id)
-        formData.append("title" , data.title)
-        formData.append("end_date" , data.end_date)
-        formData.append("appointment_time" , data.appointment_time)
-        formData.append("location" , data.location)
-        formData.append("description" , data.description)
-        formData.append("summary_description" , data.summary_description)
-        formData.append("is_main" , data.is_main)
-        formData.append("slug" , data.slug)
-
-        if(data.image != ""){
-          formData.append("image" , data.image)
-        }
-
-        const result = await HTTP.post("/admin/appointments/edit", formData ,{
-          headers: {
-            "Authorization": "Bearer "+ token
-          }
-        })
-
-        if(result.status == 200){
-            if(result.data){
-                return result.data
-            }else{
-              return {
-                "message": "failed"
-              }
-            }
-        }else{
-          return {
-              "message": "failed"
-          }
-        }
-      },
-
+      // theme api
       async get_theme_config(context) {
         const token = cookies.get("_token")
         const result = await HTTP.get("/admin/settheme/get-theme-detail" ,{
@@ -1591,16 +920,6 @@ const store = createStore({
       async save_theme_config(context , data){
         const token = cookies.get("_token")
         const formData = new FormData()
-        if(data.sliders.length != 0){
-          let j = 0;
-          for (let i = 0; i < data.sliders.length; i++) {
-            if(data.sliders[i].file != '') {
-              formData.append("slider["+j+"][sliderImg]" , data.sliders[i].file);
-              formData.append("slider["+j+"][sliderId]"  , data.sliders[i].sliderId);
-              j = j + 1
-            }
-          }
-        }
 
         if(data.linkduni.length != 0) {
           for(let i=0; i < data.linkduni.length; i++){
@@ -1643,30 +962,6 @@ const store = createStore({
         }        
         
       },
-
-      async logout_supporter(context){
-        const token = cookies.get("_token")
-        const result = await HTTP.post("/admin/auth/logout" ,{
-          headers: {
-            "Authorization": "Bearer "+ token
-          }
-        })
-
-        if(result.status == 200){
-            if(result.data){
-                cookies.remove("_token" , {path: '/'})
-                return result.data
-            }else{
-                return {
-                    "message": "failed"
-                }
-            }
-        }else{
-            return {
-                "message": "failed"
-            }
-        }
-      }
     },
 
     // getters
