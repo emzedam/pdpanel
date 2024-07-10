@@ -5,7 +5,7 @@
     <div class="col-span-4 row-span-3 p-6 border rounded-lg">
       <div class="flex items-start content-between justify-between">
         <div class="content-left">
-          <span class="text-sm text-gray-500">مجموع مشتریان</span>
+          <span class="text-sm text-gray-500">مجموع کاربران</span>
           <div class="flex items-center my-1">
             <h4 class="mb-0 ml-2 font-bold p-2 text-green-500">
               {{ usersList.length }} عدد
@@ -25,9 +25,9 @@
     <div class="col-span-4 row-span-3 p-6 border rounded-lg">
       <div class="flex items-start content-between justify-between">
         <div class="content-left">
-          <span class="text-sm text-gray-500"> تعداد کل سفارش</span>
+          <span class="text-sm text-gray-500"> تعداد کل نوشته ها</span>
           <div class="flex items-center my-1">
-            <h4 class="mb-0 ml-2 font-bold p-2 text-green-500">0 عدد</h4>
+            <h4 class="mb-0 ml-2 font-bold p-2 text-green-500">{{ postsCount }} عدد</h4>
             <!-- <span class="font-bold text-green-500">(+89%)</span> -->
           </div>
           <span class="text-sm text-gray-500"> تحلیل تا به امروز </span>
@@ -43,10 +43,10 @@
     <div class="col-span-4 row-span-3 p-6 border rounded-lg">
       <div class="flex items-start content-between justify-between">
         <div class="content-left">
-          <span class="text-sm text-gray-500"> میانگین ارزش کل سفارش ها </span>
+          <span class="text-sm text-gray-500"> میانگین بازدید کل نوشته ها </span>
           <div class="flex items-center my-1">
             <h4 class="mb-0 ml-2 font-bold p-2 badge bg-label-success text-sm">
-              0
+              {{ reviewCounts }}
             </h4>
             <!-- <span class="font-bold text-green-500">(+89%)</span> -->
           </div>
@@ -55,7 +55,7 @@
         <span
           class="flex items-center justify-center w-8 h-8 p-4 text-xs text-indigo-500 bg-indigo-100 rounded badge font-en"
         >
-          AOD
+          <i class="fa-duotone fa-eye"></i>
         </span>
       </div>
     </div>
@@ -63,7 +63,6 @@
     <dataset
       v-slot="{ ds }"
       :ds-data="usersList"
-      :ds-sortby="sortBy"
       :ds-sort-as="{}"
       :ds-search-in="['name']"
       :ds-search-as="{}"
@@ -627,11 +626,6 @@ export default {
       Shipping: false,
       Discount: false,
       usersList: [],
-      filteredCounts: {
-        paiedCount: 0,
-        unpaiedCount: 0,
-        allCount: 0,
-      },
       filteredContainer: [],
       cols: [
         {
@@ -705,14 +699,19 @@ export default {
           },
         },
       },
+      postsCount: 0,
+      reviewCounts: 0
+
     };
   },
 
   async mounted() {
     const clients = await this.$store.dispatch("get_users_list");
     if (clients.status == 200) {
-      this.usersList = clients.result;
-      this.filteredContainer = clients.result;
+      this.usersList    = clients.result.list;
+      this.filteredContainer = clients.result.list;
+      this.postsCount   = clients.result.postsCount
+      this.reviewCounts = clients.result.reviewCount
     }
   },
 
@@ -733,8 +732,8 @@ export default {
             "مشتری مورد نظر با موفقیت حذف شد",
             "success"
           );
-          this.usersList = result.result;
-          this.filteredContainer = result.result;
+          this.usersList = result.result.list;
+          this.filteredContainer = result.result.list;
         } else {
           this.showSwal("خطایی رخ داد", "خطا در حذف مشتری !", "error");
         }

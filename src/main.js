@@ -20,23 +20,29 @@ import persionToEnglish from '../plugins/persionToEnglish.js'
 import Echo from 'laravel-echo';
 import Pusher from 'pusher-js';
 
-const echo = new Echo({
-    broadcaster: 'pusher',
-    key: '87543cca355daa4c6d73',
-    cluster: 'mt1',
-    encrypted: true,
-    authEndpoint: 'https://apiblog.petoman.com/broadcasting/auth',  // تنظیم مسیر صحیح احراز هویت
-    auth: {
-        headers: {
-            Authorization: `Bearer ${cookies.get("_token")}` // اگر نیاز به توکن احراز هویت دارید
-        }
-    }
-});
+// const echo = new Echo({
+//     broadcaster: 'pusher',
+//     key: '87543cca355daa4c6d73',
+//     cluster: 'mt1',
+//     encrypted: true,
+//     authEndpoint: 'https://apiblog.petoman.com/broadcasting/auth',  // تنظیم مسیر صحیح احراز هویت
+//     auth: {
+//         headers: {
+//             Authorization: `Bearer ${cookies.get("_token")}` // اگر نیاز به توکن احراز هویت دارید
+//         }
+//     },
+//     forceTLS: false, // اگر از HTTPS استفاده نمی‌کنید
+//     wsHost: "https://apiblog.petoman.com", // آدرس سرور Laravel Echo Server شما
+//     wsPort: 6001,
+//     wssPort: 6001, // اگر از HTTPS استفاده می‌کنید
+//     disableStats: true,
+//     enabledTransports: ['ws', 'wss'], 
+// });
 
 
 const app = createApp(App)
 
-app.provide('$echo', echo);
+// app.provide('$echo', echo);
 app.config.globalProperties.globalUrl = 'https://hamiapi.petoman.com/'
 
 

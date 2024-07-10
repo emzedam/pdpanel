@@ -289,15 +289,16 @@
       return store.getters["get_authadmin"]
     })
 
+    // const echo = inject('$echo');
+    // console.log(echo)
     onMounted(() => {
-      const echo = inject('$echo');
-      if (echo) {
-        echo.channel('notifications')
-          .listen('PostNeedsApprovalEvent', (event) => {
-              console.log('A new post needs approval:', event);
-              // نمایش اعلان در داشبورد مدیریت
-          });
-      }
+      // if (echo) {
+      //   echo.private('notifications')
+      //     .listen('PostNeedsApprovalEvent', (event) => {
+      //         console.log('A new post needs approval:', event);
+      //         // نمایش اعلان در داشبورد مدیریت
+      //     });
+      // }
       // Echo.channel('notifications')
       //   .listen('PostNeedsApproval', (event) => {
       //       console.log('A new post needs approval:', event);
