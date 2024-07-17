@@ -180,7 +180,7 @@
                                 child.title
                               }}</span>
                               <i
-                                v-if="data.parent_id == child._id"
+                                v-if="data.parent_id == child.id"
                                 class="flex items-center pl-2 text-left text-green-500 fa-solid fa-check"
                               ></i>
                             </label>
@@ -212,7 +212,7 @@
                                     subchild.title
                                   }}</span>
                                   <i
-                                    v-if="data.parent_id == subchild._id"
+                                    v-if="data.parent_id == subchild.id"
                                     class="flex items-center pl-2 text-left text-green-500 fa-solid fa-check"
                                   ></i>
                                 </label>
@@ -314,7 +314,7 @@
         </div>
       </div>
     </form>
-  </template>
+</template>
   
   <script>
   import { toast } from "vue3-toastify";
@@ -335,6 +335,7 @@
         cat_name: null
       };
     },
+    emits: ['updateCategories'],
     props: {
       categoryList: {
         required: true,
@@ -422,6 +423,16 @@
           this.$refs.categoryimage.value = "";
           this.data.cat_img_reader_file = null;
         }
+      },
+      create_cat_img_reader_file(file){
+        let img = new Image();
+        let reader = new FileReader();
+  
+        reader.onload = (e) => {
+          this.data.cat_img_reader_file = { src: e.target.result };
+        };
+  
+        reader.readAsDataURL(file);
       },
       setParentId(id, name) {
         this.data.parent_id = id;

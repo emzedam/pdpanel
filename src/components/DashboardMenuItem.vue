@@ -199,7 +199,7 @@
             </collapse-transition>
           </li>
   
-          <li>
+          <li v-if="authadmin && authadmin.role == 1">
             <button
               @click="openSubMenu(2)"
               class="middle none font-fa font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-2 rounded-lg text-gray-500 active:opacity-[0.85] active:bg-green-50/20 focus:bg-gray-100 focus:text-gray-500 w-full flex justify-between items-center gap-4 px-4 capitalize"
@@ -269,7 +269,7 @@
             </collapse-transition>
           </li>
 
-          <li>
+          <li v-if="authadmin && authadmin.role == 1">
             <button
               @click="openSubMenu(3)"
               class="middle none font-fa font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-2 rounded-lg text-gray-500 active:opacity-[0.85] active:bg-green-50/20 focus:bg-gray-100 focus:text-gray-500 w-full flex justify-between items-center gap-4 px-4 capitalize"
@@ -339,7 +339,7 @@
             </collapse-transition>
           </li>
   
-          <li>
+          <li v-if="authadmin && authadmin.role == 1">
             <router-link to="/theme/">
               <button
                 class="middle none font-fa font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-2 rounded-lg text-gray-500 active:opacity-[0.85] active:bg-green-50/20 focus:bg-gray-100 focus:text-gray-500 w-full flex justify-between items-center gap-4 px-4 capitalize"
@@ -366,10 +366,14 @@
 </template>
 
 <script setup>
-import {ref} from 'vue'
+import {ref , onMounted , computed} from 'vue'
+import { useStore } from 'vuex';
 const props = defineProps(["NavMenu"]);
 const emit = defineEmits(["close_navmenu_action"]);
 const submenuIndex = ref(null);
+const store = useStore()
+
+
 
 const openSubMenu = (index) => {
   if (submenuIndex.value == index) {
@@ -378,6 +382,18 @@ const openSubMenu = (index) => {
     submenuIndex.value = index;
   }
 };
+
+onMounted(() => {
+ 
+    // console.log(authadmin.value)
+  
+  // authadmin.value = store.getters["get_authadmin"]
+  
+})
+
+const authadmin = computed(() => {
+      return store.getters["get_authadmin"]
+})
 
 const close_navmenu_action = () => {
   emit("close_navmenu_action");

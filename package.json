@@ -9,14 +9,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ckeditor/ckeditor5-upload": "^42.0.1",
+    "@ckeditor/ckeditor5-vue": "^6.0.0",
     "@tailwindcss/forms": "^0.5.7",
-    "@vueup/vue-quill": "^1.2.0",
     "@yaireo/tagify": "^4.24.0",
     "axios": "^1.6.8",
+    "ckeditor5": "^42.0.1",
     "laravel-echo": "^1.16.1",
     "pusher-js": "^8.4.0-rc2",
-    "quill-blot-formatter": "^1.0.5",
-    "quill-image-uploader": "^1.3.0",
     "sweetalert2": "^11.10.8",
     "tailwind-scrollbar": "^3.1.0",
     "vue": "^3.4.21",
@@ -31,6 +31,7 @@
     "autoprefixer": "^10.4.19",
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.3",
-    "vite": "^5.2.8"
+    "vite": "^5.2.8",
+    "vite-svg-loader": "^5.1.0"
   }
 }

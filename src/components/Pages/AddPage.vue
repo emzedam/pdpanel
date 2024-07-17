@@ -64,14 +64,10 @@
                 <span> توضیحات</span>
               </label>
               <div class="w-full mt-1">
-                <QuillEditor
-                  theme="snow"
-                  contentType="html"
-                  :modules="modules"
-                  toolbar="full"
-                  v-model:content="pageData.content"
-                  :options="options"
-                ></QuillEditor>
+
+                <ckeditor ref="ckeditorRef" />
+
+                
               </div>
             </div>
             <div class="bg-white border rounded-lg">
@@ -326,14 +322,16 @@
 <script>
 import { mapGetters } from 'vuex'
 import TagInput from "../Tag/TagInput.vue";
-import ImageUploader from 'quill-image-uploader';
-import BlotFormatter from 'quill-blot-formatter/dist/BlotFormatter'
 import api from "@/axios/index.js";
 import Swal from 'sweetalert2'
+import Ckeditor from '@/components/Ckeditor/index.vue'
+
+
 
 export default {
   components: {
     TagInput,
+    ckeditor: Ckeditor
   },
   data() {
     return {
@@ -341,44 +339,6 @@ export default {
       useRealInput: false,
       focused: false,
       category: false,
-      options: {
-        debug: "info",
-        modules: {
-          toolbar: ["bold", "italic", "underline"],
-          BlotFormatter: {},
-        },
-        placeholder: "نوشتن را شروع کنید...",
-        readOnly: false,
-        theme: "snow",
-      },
-      modules: [
-        {
-          name: 'ImageUploader',  
-          module: ImageUploader, 
-          options: {
-            upload: file => {
-              return new Promise((resolve, reject) => {
-                const formData = new FormData();
-                formData.append("quil_file", file);
-
-                api.post('/admin/pages/quil-upload', formData)
-                .then(res => {
-                  resolve(res.data.url);
-                })
-                .catch(err => {
-                  reject("Upload failed");
-                  console.error("Error:", err)
-                })
-              })
-            }
-          }
-        },
-        {
-          name: 'blotFormatter',  
-          module: BlotFormatter, 
-          options: {}
-        }
-      ],
       pageData: {
         title: '',
         slug:'',
@@ -393,7 +353,9 @@ export default {
       seoImgSrc2: ''
     };
   },
-
+  mounted() {
+    // console.log('Editor is ready!', this.$refs.ckeditorRef);
+  },
   methods: {
     toggleFocus() {
       if (this.useRealInput) {
@@ -467,6 +429,7 @@ export default {
       this.pageData.image = '';
     },
     async savePageData() {
+      this.pageData.content = this.$refs.ckeditorRef.config.initialData
       let validate = this.validateData()
       if(validate == true){
         this.loading = true
@@ -509,6 +472,7 @@ export default {
 
       this.$refs.seo_image_input.value = ""
       this.$refs.index_image_input.value = ""
+      this.$refs.ckeditorRef.config.initialData = ""
     },
     showSwal(title , text , icon) {
       Swal.fire({

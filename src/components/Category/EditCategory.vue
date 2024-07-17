@@ -127,7 +127,7 @@
                     <li
                       v-for="(item, index) in categoryList"
                       :key="index"
-                      @click="setParentId(item._id, item.title)"
+                      @click="setParentId(itemid, item.title)"
                     >
                       <div
                         class="flex items-center w-full my-1 border rounded hover:bg-gray-100"
@@ -147,7 +147,7 @@
                             >{{ item.title }}</span
                           >
                           <i
-                            v-if="data.parent_id == item._id"
+                            v-if="data.parent_id == itemid"
                             class="flex items-center pl-2 text-left text-green-500 fa-solid fa-check"
                           ></i>
                         </label>
@@ -157,7 +157,7 @@
                         <li
                           v-for="(child, index) in item.childs"
                           :key="index"
-                          @click.stop="setParentId(child._id, child.title)"
+                          @click.stop="setParentId(childid, child.title)"
                         >
                           <div
                             class="flex items-center w-full my-1 border rounded hover:bg-gray-100"
@@ -177,7 +177,7 @@
                                 >{{ child.title }}</span
                               >
                               <i
-                                v-if="data.parent_id == child._id"
+                                v-if="data.parent_id == childid"
                                 class="flex items-center pl-2 text-left text-green-500 fa-solid fa-check"
                               ></i>
                             </label>
@@ -189,7 +189,7 @@
                               <li
                                 v-for="(subchild, index) in child.childs"
                                 :key="index"
-                                @click.stop="setParentId(subchild._id, subchild.title)"
+                                @click.stop="setParentId(subchildid, subchild.title)"
                               >
                                 <div
                                   class="flex items-center w-full my-1 border rounded hover:bg-gray-100"
@@ -209,7 +209,7 @@
                                       >{{ subchild.title }}</span
                                     >
                                     <i
-                                      v-if="data.parent_id == subchild._id"
+                                      v-if="data.parent_id == subchildid"
                                       class="flex items-center pl-2 text-left text-green-500 fa-solid fa-check"
                                     ></i>
                                   </label>
@@ -318,7 +318,7 @@
         </div>
       </div>
     </form>
-  </template>
+</template>
   
   <script>
   import { toast } from "vue3-toastify";
@@ -352,7 +352,7 @@
       if (this.catDetail) {
         this.data.title = this.catDetail.title;
         this.data.parent_id = this.catDetail.parent_id;
-        this.setParentId(this.catDetail.parent_id , this.catDetail.parent_name)
+        this.setParentId(this.catDetail.parent_id == null ? 0 : this.catDetail.parent_id , this.catDetail.parent_name)
       }
     },
     methods: {

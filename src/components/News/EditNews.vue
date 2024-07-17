@@ -217,14 +217,14 @@
                 <span> توضیحات</span>
               </label>
               <div class="w-full mt-1">
-                <QuillEditor
+                <!-- <QuillEditor
                   theme="snow"
                   contentType="html"
                   :modules="modules"
                   toolbar="full"
                   v-model:content="newsData.content"
                   :options="options"
-                ></QuillEditor>
+                ></QuillEditor> -->
               </div>
             </div>
 
@@ -497,8 +497,8 @@
 <script>
 import { mapGetters } from 'vuex'
 import TagInput from "../Tag/TagInput.vue";
-import ImageUploader from 'quill-image-uploader';
-import BlotFormatter from 'quill-blot-formatter/dist/BlotFormatter'
+// import ImageUploader from 'quill-image-uploader';
+// import BlotFormatter from 'quill-blot-formatter/dist/BlotFormatter'
 import api from "@/axios/index.js";
 import Swal from 'sweetalert2'
 

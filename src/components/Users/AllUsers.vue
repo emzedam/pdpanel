@@ -95,7 +95,7 @@
             <div class="relative flex w-full gap-4">
               <dataset-show />
               <RouterLink
-                to="/add-client"
+                to="/add-user"
                 class="box-border relative z-0 flex items-center justify-center w-full p-2.5 overflow-hidden font-medium text-white transition-all duration-300 bg-orange-500 rounded-md cursor-pointer group ease focus:outline-none"
               >
                 <span
@@ -484,7 +484,7 @@
                               />
                             </div>
                             <div class="pr-3">
-                              <RouterLink to="/client-view">
+                              <RouterLink :to="`/user/profile/${row.id}`">
                                 <div class="text-sm font-semibold">
                                   {{ row.name }}
                                 </div>

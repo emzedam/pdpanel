@@ -197,7 +197,7 @@
                                                     class="mr-1 font-medium text-gray-400"
                                                   >
                                                     <img
-                                                      :src="`${globalUrl}/storage/category_images/${row.cat_image}`"
+                                                      :src="`${globalUrl}/storage/categories/${row.cat_image}`"
                                                       class="w-10 h-10 rounded-lg mx-auto"
                                                   /></span>
                                                 </div>
@@ -214,6 +214,7 @@
                                                       class="flex justify-center item-center"
                                                     >
                                                       <div
+                                                        @click="delete_one_of_cat(row.id)"
                                                         class="w-4 ml-4 transform cursor-pointer hover:text-gray-500 hover:scale-110"
                                                       >
                                                         <i
@@ -221,7 +222,7 @@
                                                         ></i>
                                                       </div>
                                                       <RouterLink
-                                                        to="/Ecommerce/Products/EditCategory"
+                                                        :to="`/edit-category/${row.id}`"
                                                       >
                                                         <div
                                                           class="w-4 ml-4 transform cursor-pointer hover:text-gray-500 hover:scale-110"
@@ -231,18 +232,9 @@
                                                           ></i>
                                                         </div>
                                                       </RouterLink>
-  
-                                                      <RouterLink
-                                                        to="/Ecommerce/Products/ViewCategory"
-                                                      >
-                                                        <button
-                                                          class="w-4 ml-4 transform cursor-pointer hover:text-gray-500 hover:scale-110"
-                                                        >
-                                                          <i
-                                                            class="fa-solid fa-gear text-[18px] !w-5 !h-5 font-normal"
-                                                          ></i>
-                                                        </button>
-                                                      </RouterLink>
+                                                      
+                                                      
+                           
                                                     </div>
                                                   </span>
                                                 </div>
@@ -348,7 +340,7 @@
                           <li
                             class="p-2 text-sm text-center whitespace-nowrap border-l items-center flex justify-center"
                           >
-                            {{ row.parent_name }}
+                            {{ row.parent_id == null ? 'دسته مادر' : '-' }}
                           </li>
   
                           <li
@@ -362,7 +354,7 @@
                           >
                             <img
                               v-if="row.cat_image != null"
-                              :src="`${globalUrl}/storage/category_images/${row.cat_image}`"
+                              :src="`${globalUrl}/storage/categories/${row.cat_image}`"
                               class="w-10 h-10 rounded-lg mx-auto"
                             />
                             <p v-else>-</p>
@@ -440,7 +432,7 @@
                               <div
                                 class="p-2 text-sm text-center whitespace-nowrap border-l items-center flex justify-center text-gray-500"
                               >
-                                {{ child.parent_name }}
+                                {{ child.parent_id == null ? 'دسته مادر' : '-' }}
                               </div>
   
                               <div
@@ -454,7 +446,7 @@
                               >
                                 <img
                                   v-if="child.cat_image != null"
-                                  :src="`${globalUrl}/storage/category_images/${child.cat_image}`"
+                                  :src="`${globalUrl}/storage/categories/${child.cat_image}`"
                                   class="w-10 h-10 rounded-lg mx-auto"
                                 />
                                 <p v-else>
@@ -523,7 +515,7 @@
                               <li
                                 class="p-2 text-sm text-center whitespace-nowrap border-l items-center flex justify-center text-gray-500"
                               >
-                                {{ subchild.parent_name }}
+                                {{ subchild.parent_id == null ? 'دسته مادر' : '-' }}
                               </li>
   
                               <li
@@ -537,7 +529,7 @@
                               >
                                 <img
                                   v-if="subchild.cat_image != null"
-                                  :src="`${globalUrl}/storage/category_images/${subchild.cat_image}`"
+                                  :src="`${globalUrl}/storage/categories/${subchild.cat_image}`"
                                   class="w-10 h-10 rounded-lg mx-auto"
                                 />
                                 <p v-else><i class="fa fa-image cursor-pointer"></i></p>
@@ -590,7 +582,7 @@
         </div>
       </div>
     </dataset>
-  </template>
+</template>
   
   <script>
   import ExportExcel from "@/components/DataTable/ExportExcel.vue";
@@ -733,7 +725,7 @@
         if (this.slectedItems.length != 0) {
           if (
             window.confirm(
-              "با حذف هر دسته بندی محصولات شامل آن دسته همگی حذف خواهند شد ، آیا از ادامه این اقدام مطمعنید ؟"
+              "با حذف هر دسته بندی ، دسته بندی های زیر گزینه با نوشته های شامل آن دسته همگی حذف خواهند شد ، آیا از ادامه این اقدام مطمعنید ؟"
             )
           ) {
             const do_delete = await this.$store.dispatch(
@@ -765,7 +757,7 @@
       async delete_one_of_cat(id) {
         Swal.fire({
           title: "آیا مطمعن هستید؟",
-          text: "با حذف هر دسته بندی ، دسته بندی های زیر گزینه با اخبار های شامل آن دسته همگی حذف خواهند شد ، آیا از ادامه این اقدام مطمعنید ؟",
+          text: "با حذف هر دسته بندی ، دسته بندی های زیر گزینه با نوشته های شامل آن دسته همگی حذف خواهند شد ، آیا از ادامه این اقدام مطمعنید ؟",
           icon: "warning",
           showCancelButton: true,
           confirmButtonColor: "#9d2c48",

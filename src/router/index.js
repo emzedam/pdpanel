@@ -52,88 +52,137 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomeView,
-      meta: { requiresAuth: true }
+      meta: { 
+        requiresAuth: true,
+       
+      }
     }, {
       path: '/theme',
       name: 'theme',
       component:ThemeView,
-      meta: { requiresAuth: true }
+      meta: { 
+        requiresAuth: true,
+        requiresRole: 1
+      }
     }, {
       path: '/add-page',
       name: 'AddPage',
       component:AddPage,
-      meta: { requiresAuth: true }
+      meta: { 
+        requiresAuth: true,
+       
+      }
     }, {
       path: '/edit-page/:id',
       name: 'EditPage',
       component:EditPage,
-      meta: { requiresAuth: true }
+      meta: { 
+        requiresAuth: true,
+       
+      }
     }, {
       path: '/pages',
       name: 'Pages',
       component:Pages,
-      meta: { requiresAuth: true }
+      meta: { 
+        requiresAuth: true,
+       
+      }
     }, {
       path: '/add-news',
       name: 'AddNews',
       component:AddNews,
-      meta: { requiresAuth: true }
+      meta: { 
+        requiresAuth: true,
+       
+      }
     }, {
       path: '/edit-news/:id',
       name: 'EditNews',
       component:EditNews,
-      meta: { requiresAuth: true }
+      meta: { 
+        requiresAuth: true,
+       
+      }
     }, {
       path: '/add-category',
       name: 'AddCategory',
       component:AddCategory,
-      meta: { requiresAuth: true }
+      meta: { 
+        requiresAuth: true,
+       
+      }
     }, {
       path: '/edit-category/:id',
       name: 'EditCategory',
       component:EditCategory,
-      meta: { requiresAuth: true }
+      meta: { 
+        requiresAuth: true,
+      }
     }, {
       path: '/news',
       name: 'News',
       component:News,
-      meta: { requiresAuth: true }
+      meta: { 
+        requiresAuth: true,
+      }
     }, {
       path: '/add-admin',
       name: 'AddAdmin',
       component:AddAdmin,
-      meta: { requiresAuth: true }
+      meta: { 
+        requiresAuth: true,
+        requiresRole: 1
+      }
     }, {
       path: '/admin/profile/:id',
       name: 'Profile',
       component:AdminProfileView,
-      meta: { requiresAuth: true }
+      meta: { 
+        requiresAuth: true,
+        requiresRole: 1
+      }
     }, {
       path: '/admins',
       name: 'admins',
       component:AdminsView,
-      meta: { requiresAuth: true }
+      meta: { 
+        requiresAuth: true,
+        requiresRole: 1
+      }
     },,
     {
       path: '/users',
       name: 'Users',
       component:Users,
-      meta: { requiresAuth: true }
+      meta: {
+        requiresAuth: true,
+        requiresRole: 1
+      }
     },{
       path: '/add-user',
       name: 'AddUser',
       component:AddUser,
-      meta: { requiresAuth: true }
+      meta: {
+        requiresAuth: true,
+        requiresRole: 1
+      }
     }, {
       path: '/user/profile/:id',
       name: 'viewUser',
       component:viewUser,
-      meta: { requiresAuth: true }
+      meta: { 
+        requiresAuth: true,
+        requiresRole: 1
+      }
     }, {
       path: '/edit-user/:id',
       name: 'EditUser',
       component: EditUser,
-      meta: { requiresAuth: true }
+      meta: { 
+        requiresAuth: true,
+        requiresRole: 1
+      }
     },{
       path: "/:notFound",
       name: 'Notfound',
@@ -146,6 +195,7 @@ const router = createRouter({
 })
 
 
+// authenticate admins
 router.beforeEach(async (to, from) => {
   
   if (cookies.get('_token') != undefined) {
@@ -177,5 +227,27 @@ router.beforeEach(async (to, from) => {
 
  
 });
+
+// check role and accessibility admins to routes
+router.beforeEach((to, from, next) => {
+  if(store.state.authadmin != null) {
+    if(to.matched.some(record => record.meta.requiresRole)) {
+      if (to.meta.requiresRole == 1) {
+
+        
+        next({ name: 'home' });
+
+        
+      }else {
+        next();
+      }
+    }else {
+      next();
+    }
+  }
+});
+
+
+
 
 export default router
