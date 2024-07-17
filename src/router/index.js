@@ -13,9 +13,9 @@ import AddPage from '../views/Pages/AddPageView.vue'
 import EditPage from '../views/Pages/EditPageView.vue'
 import Pages from '../views/Pages/PagesView.vue'
 // اخبار
-import AddNews from '../views/News/AddNewsView.vue'
-import EditNews from '../views/News/EditNewsView.vue'
-import News from '../views/News/NewsView.vue'
+import AddPosts from '../views/Posts/AddPostsView.vue'
+import EditPosts from '../views/Posts/EditPostsView.vue'
+import Posts from '../views/Posts/PostsView.vue'
 
 // ادمین ها
 import AddAdmin from '../views/Admins/AddUserView.vue'
@@ -70,7 +70,6 @@ const router = createRouter({
       component:AddPage,
       meta: { 
         requiresAuth: true,
-       
       }
     }, {
       path: '/edit-page/:id',
@@ -78,7 +77,6 @@ const router = createRouter({
       component:EditPage,
       meta: { 
         requiresAuth: true,
-       
       }
     }, {
       path: '/pages',
@@ -89,17 +87,16 @@ const router = createRouter({
        
       }
     }, {
-      path: '/add-news',
-      name: 'AddNews',
-      component:AddNews,
+      path: '/add-posts',
+      name: 'AddPosts',
+      component:AddPosts,
       meta: { 
         requiresAuth: true,
-       
       }
     }, {
-      path: '/edit-news/:id',
-      name: 'EditNews',
-      component:EditNews,
+      path: '/edit-posts/:id',
+      name: 'EditPosts',
+      component:EditPosts,
       meta: { 
         requiresAuth: true,
        
@@ -110,7 +107,6 @@ const router = createRouter({
       component:AddCategory,
       meta: { 
         requiresAuth: true,
-       
       }
     }, {
       path: '/edit-category/:id',
@@ -120,9 +116,9 @@ const router = createRouter({
         requiresAuth: true,
       }
     }, {
-      path: '/news',
-      name: 'News',
-      component:News,
+      path: '/posts',
+      name: 'Posts',
+      component:Posts,
       meta: { 
         requiresAuth: true,
       }
@@ -213,8 +209,6 @@ router.beforeEach(async (to, from) => {
         await store.commit('set_admin_token', data.admin)
       }
     }
-    
-    
   }
 
 
@@ -232,7 +226,7 @@ router.beforeEach(async (to, from) => {
 router.beforeEach((to, from, next) => {
   if(store.state.authadmin != null) {
     if(to.matched.some(record => record.meta.requiresRole)) {
-      if (to.meta.requiresRole == 1) {
+      if (to.meta.requiresRole != 1) {
 
         
         next({ name: 'home' });
