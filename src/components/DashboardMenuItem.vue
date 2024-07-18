@@ -73,7 +73,7 @@
                   aria-labelledby="dropdownNavbarButton"
                 >
                   <li>
-                    <RouterLink to="/add-news">
+                    <RouterLink to="/add-posts">
                       <span
                         class="flex items-center justify-between w-full gap-4 px-4 py-2 text-xs font-bold text-gray-500 capitalize transition-all rounded-lg middle none font-fa center disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none bg-gradient-to-r"
                       >
@@ -91,7 +91,7 @@
                     </RouterLink>
                   </li>
                   <li>
-                    <RouterLink to="/news">
+                    <RouterLink to="/posts">
                       <span
                         class="flex items-center justify-between w-full gap-4 px-4 py-2 text-xs font-bold text-gray-500 capitalize transition-all rounded-lg middle none font-fa center disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none bg-gradient-to-r"
                       >

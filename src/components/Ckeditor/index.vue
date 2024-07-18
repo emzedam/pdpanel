@@ -5,11 +5,11 @@
 				<div class="editor-container__editor">
 					<div ref="editorElement">
 						<ckeditor 
-              v-if="isLayoutReady" 
-              v-model="config.initialData" 
-              :editor="editor" 
-              :config="config" 
-            />
+							v-if="isLayoutReady" 
+							v-model="config.initialData" 
+							:editor="editor" 
+							:config="config" 
+						/>
 					</div>
 				</div>
 			</div>

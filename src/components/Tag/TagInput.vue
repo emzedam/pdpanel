@@ -14,6 +14,20 @@ const emits = defineEmits(["update:modelValue"]);
 const inputRef = ref();
 let tagify = ref();
 
+const clearInput = () => {
+  inputRef.value.value = ""
+}
+
+function setDefaultValue(userStr) {
+  let str = userStr;
+  if (!str) emits("update:modelValue", []);
+  else {
+    let ans = str.split(",");
+    emits("update:modelValue", ans);
+  }
+}
+
+
 function handleChange(e) {
   let str = e.target.value;
   
@@ -32,5 +46,10 @@ onMounted(() => {
   });
   tagify.value.loadOriginalValues(props.modelValue);
 });
+
+defineExpose({
+  clearInput,
+  setDefaultValue
+})
 
 </script>

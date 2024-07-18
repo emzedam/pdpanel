@@ -892,6 +892,18 @@ select {
   top: 100%;
 }
 
+.top-\[-4px\] {
+  top: -4px;
+}
+
+.right-\[-10px\] {
+  right: -10px;
+}
+
+.right-\[-6px\] {
+  right: -6px;
+}
+
 .z-0 {
   z-index: 0;
 }
@@ -1237,6 +1249,18 @@ select {
 
 .h-screen {
   height: 100vh;
+}
+
+.h-\[200px\] {
+  height: 200px;
+}
+
+.h-\[100px\] {
+  height: 100px;
+}
+
+.h-\[120px\] {
+  height: 120px;
 }
 
 .max-h-60 {
@@ -2006,6 +2030,11 @@ select {
   padding-right: 0.25rem;
 }
 
+.px-12 {
+  padding-left: 3rem;
+  padding-right: 3rem;
+}
+
 .px-2 {
   padding-left: 0.5rem;
   padding-right: 0.5rem;
@@ -2099,6 +2128,16 @@ select {
 .py-8 {
   padding-top: 2rem;
   padding-bottom: 2rem;
+}
+
+.py-16 {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+.px-5 {
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
 }
 
 .pb-0 {
@@ -3815,6 +3854,10 @@ nav .fa-light {
 
   .lg\:grid-cols-4 {
     grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .lg\:grid-cols-5 {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
   }
 
   .lg\:flex-row {

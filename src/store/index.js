@@ -170,25 +170,35 @@ const store = createStore({
       },
 
       // news
-      async save_news_data(context , data){
+      async save_post_data(context , data){
         const token = cookies.get("_token")
         let formData = new FormData()
 
         formData.append("title" , data.title)
+        formData.append("type" , data.postType)
         formData.append("slug" , data.slug)
         formData.append("date" , data.date)
         formData.append("author_id" , data.author_id)
-        formData.append("category_ids" , data.category_ids)
+        formData.append("category_id" , data.category_id)
         formData.append("image" , data.image)
         formData.append("content" , data.content)
-        formData.append("summary_description" , data.summary_description)
         formData.append("seo_image" , data.seo_image)
         formData.append("meta_title" , data.meta_title)
         formData.append("meta_description" , data.meta_description)
         formData.append("keywords" , data.keywords)
 
+        if(data.galleries.length != 0) {
+          for(let i = 0 ; i < data.galleries.length ; i++){
+            formData.append("images["+i+"]", data.galleries[i])
+          }
+        }
 
-        const result = await HTTP.post("/admin/admin-posts/save", formData ,{
+        if(data.videoFile != null) {
+          formData.append("video", data.videoFile)
+        }
+
+
+        const result = await HTTP.post("/admin/admin-posts/save", formData , {
           headers: {
             "Authorization": "Bearer "+ token
           }
