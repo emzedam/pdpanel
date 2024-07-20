@@ -45,7 +45,7 @@
                   <input
                     type="text"
                     @keyup="(e) => set_news_title(e)"
-                    :value="newsData.title"
+                    :value="postData.title"
                     class="block w-full pr-10 py-4 border-gray-300 rounded-md focus:border-hamian focus:ring-hamian sm:text-sm"
                     placeholder="حداکثر 60 کاراکتر بنویسید"
                   />
@@ -80,8 +80,9 @@
                     />
 
                     <date-picker
-                      v-model="newsData.date"
-                      format="jYYYY/jMM/jDD"
+                      v-model="postData.date"
+                      format="YYYY-MM-DD"
+                      displayFormat="jYYYY/jMM/jDD"
                       custom-input=".custom-input"
                       @input="date=$event"
                     />
@@ -136,7 +137,7 @@
                     <span
                       class="w-full pr-2 text-right text-normal font-normal"
                     >
-                     {{ category_titles.length != 0 ? category_titles.join(','): 'دسته مورد نظر را انتخاب کنید' }}
+                     {{ category_title != null ? category_title : 'دسته مورد نظر را انتخاب کنید' }}
                         </span
                     >
                     <i
@@ -145,7 +146,7 @@
                   </button>
                   <div
                     class="categories absolute top-18 z-10 mt-2 bg-white border rounded-lg w-full p-3"
-                    v-if="focused"
+                    v-if="focused == true"
                   >
                     <ul class="rounded-lg">
                       <li class="disabled text-sm font-semibold text-gray-400">
@@ -163,12 +164,12 @@
                         class="py-1 text-gray-500 relative border border-gray-100 p-1 mt-2 cursor-pointer  px-2 rounded-md"
                         v-for="category in cat_search_result"
                         @click.stop="selectCategory(category.id , category.title)"
-                        :class="{ 'bg-gray-50': newsData.category_ids.includes(category.id) }"
+                        :class="{ 'bg-gray-50': postData.category_id == category.id }"
                       >
                         <i class="fa-chevron-left ml-1 fa-light text-[15px] text-hamian"></i>
                         <span class="inline-block mr-1 hover:text-hamian transition-all">{{ category.title }}</span>
                         <i
-                        v-if="newsData.category_ids.includes(category.id)"
+                        v-if="postData.category_id == category.id"
                       class="fa-check ml-1 fa-light text-[15px] text-hamian absolute left-3 top-2"></i>
                         
                         <!-- level two category -->
@@ -177,12 +178,12 @@
                             class="py-1 relative text-gray-500 border border-gray-100  mt-2 cursor-pointer px-2 rounded-md"
                             v-for="levelTwoCat in category.childs"
                             @click.stop="selectCategory(levelTwoCat.id , levelTwoCat.title)"
-                            :class="{ 'bg-gray-50': newsData.category_ids.includes(levelTwoCat.id) }"
+                            :class="{ 'bg-gray-50': postData.category_id == levelTwoCat.id }"
                           >
                             <i class="fa-chevron-left ml-1 fa-light text-[15px] text-hamian"></i>
                             <span class="inline-block mr-1 hover:text-hamian transition-all">{{ levelTwoCat.title }}</span>
                             <i
-                              v-if="newsData.category_ids.includes(levelTwoCat.id)"
+                              v-if="postData.category_id == levelTwoCat.id"
                             class="fa-check ml-1 fa-light text-[15px] text-hamian absolute left-3 top-2"></i>
 
                             <!-- level three category -->
@@ -191,12 +192,12 @@
                                 class="py-1 border relative border-gray-100  text-gray-500 mt-2 cursor-pointer  px-2 rounded-md"
                                 v-for="levelThreeCat in levelTwoCat.childs"
                                 @click.stop="selectCategory(levelThreeCat.id , levelThreeCat.title)"
-                                :class="{ 'bg-gray-50': newsData.category_ids.includes(levelThreeCat.id) }"
+                                :class="{ 'bg-gray-50': postData.category_id == levelThreeCat.id }"
                               >
                                 <i class="fa-chevron-left ml-1 fa-light text-[15px] text-hamian"></i>
                                 <span class="inline-block mr-1 hover:text-hamian transition-all">{{ levelThreeCat.title }}</span>
                                 <i
-                                v-if="newsData.category_ids.includes(levelThreeCat.id)"
+                                v-if="postData.category_id == levelThreeCat.id"
                                 class="fa-check ml-1 fa-light text-[15px] text-hamian absolute left-3 top-2"></i>
                               </li>
                             </ul>
@@ -217,34 +218,120 @@
                 <span> توضیحات</span>
               </label>
               <div class="w-full mt-1">
-                <!-- <QuillEditor
-                  theme="snow"
-                  contentType="html"
-                  :modules="modules"
-                  toolbar="full"
-                  v-model:content="newsData.content"
-                  :options="options"
-                ></QuillEditor> -->
+                <ckeditor ref="ckeditorRef" />
               </div>
             </div>
 
-            <div class="relative col-span-4 sm:col-span-2 mt-2">
-              <label
-                for="last-name"
-                class="flex py-2 pr-1 text-sm font-medium text-gray-700"
-              >
-                <span> خلاصه نوشته</span>
-              </label>
-              <div class="w-full mt-1">
-                <QuillEditor 
-                  theme="snow" 
-                  toolbar="minimal" 
-                  contentType="html"
-                  :options="options"
-                  v-model:content="newsData.summary_description"
-                ></QuillEditor>
+
+            <div class="grid lg:grid-cols-2 grid-cols-1 gap-3" v-if="postType == 'gallery'">
+              <div class="relative col-span-1" v-if="postType == 'gallery'">
+                <div
+                    class="flex items-center justify-center w-full px-6 py-16 border-2 border-gray-300 border-dashed rounded-md"
+                >
+                  <div class="space-y-1 text-center">
+                    <div
+                      class="w-12 h-12 mx-auto text-4xl text-gray-400 fa-duotone fa-image"
+                    ></div>
+                    <div class="flex text-sm text-gray-600">
+                      <label
+                        for="galleryFiles"
+                        class="relative mx-auto font-medium text-hamian bg-white rounded-md cursor-pointer focus-widuotone:outline-none focus-widuotone:ring-2 focus-widuotone:ring-hamian focus-widuotone:ring-offset-2 hover:text-hamian"
+                        ><span>گالری عکس ها را انتخاب کنید</span
+                        ><input
+                          id="galleryFiles"
+                          type="file"
+                          class="sr-only"
+                          ref="galleryElem"
+                          multiple
+                          accept="image/*"
+                          @change="handleGalleryChange"
+                      /></label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="w-full col-span-1  px-5 py-3 bg-gray-100 rounded-lg">
+                <div class="grid lg:grid-cols-5 grid-cols-2 gap-4">
+                  <!-- default images -->
+                  <div v-if="defaultGalleries.length != 0" v-for="(gallery, index) in defaultGalleries" :key="gallery.id" class="rounded-lg relative">
+                    <img :src="`${globalUrl}/storage/${gallery.image_path}`" alt="Selected Image" width="100" class="rounded-lg object-cover w-full h-[120px]" />
+  
+                    <div @click="deleteDefaultGalleryImage(index , gallery.id)" class="w-5 h-5 bg-red-500 text-white flex justify-center items-center absolute top-[-10px] right-[-6px] rounded-lg cursor-pointer ">
+                      <i class="fa fa-close"></i>
+                    </div>
+                  </div>
+
+                  <!-- local images -->
+                  <div v-if="gallerySrcs.length != 0" v-for="(src, index) in gallerySrcs" :key="index" class="rounded-lg relative">
+                    <img :src="src" alt="Selected Image" width="100" class="rounded-lg object-cover w-full h-[120px]" />
+  
+                    <div @click="deleteGalleryImage(index)" class="w-5 h-5 bg-red-500 text-white flex justify-center items-center absolute top-[-10px] right-[-6px] rounded-lg cursor-pointer ">
+                      <i class="fa fa-close"></i>
+                    </div>
+                  </div>
+                </div>
+                <div v-if="gallerySrcs.length == 0 && defaultGalleries.length == 0" class="flex h-full justify-center items-center w-full"> 
+                  <p>عکسی انتخاب نشده !</p>
+                </div>
               </div>
             </div>
+
+            <div class="grid lg:grid-cols-2 grid-cols-1 gap-3" v-if="postType == 'video'">
+              <div class="relative col-span-1" v-if="postType == 'video'">
+                <div
+                    class="flex items-center justify-center w-full px-6 py-16 border-2 border-gray-300 border-dashed rounded-md"
+                >
+                  <div class="space-y-1 text-center">
+                    <div
+                      class="w-12 h-12 mx-auto text-4xl text-gray-400 fa-duotone fa-video"
+                    ></div>
+                    <div class="flex text-sm text-gray-600">
+                      <label
+                        for="videoFile"
+                        class="relative mx-auto font-medium text-hamian bg-white rounded-md cursor-pointer focus-widuotone:outline-none focus-widuotone:ring-2 focus-widuotone:ring-hamian focus-widuotone:ring-offset-2 hover:text-hamian"
+                        ><span> ویدیو را انتخاب کنید </span
+                        ><input
+                          id="videoFile"
+                          type="file"
+                          class="sr-only"
+                          ref="videoElem"
+                          accept="video/*"
+                          @change="handleVideoChange"
+                      /></label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="w-full col-span-1  px-5 py-3 bg-gray-100 rounded-lg">
+                <div class="grid  grid-cols-1 gap-4">
+                  <div v-if="videoSrc != null" class="rounded-lg relative flex items-center justify-center">
+                    <div class="relative">
+                      <video :src="videoSrc" controls width="300"></video>
+  
+                      <div @click="deleteVideo()" class="w-5 h-5 bg-red-500 text-white flex justify-center items-center absolute top-[-10px] right-[-6px] rounded-lg cursor-pointer ">
+                        <i class="fa fa-close"></i>
+                      </div>
+                    </div>
+                  </div>
+                  <div v-if="defaultVideo != null" class="rounded-lg relative flex items-center justify-center">
+                    <div class="relative">
+                      <video :src="`${globalUrl}/storage/${defaultVideo.video_path}`" controls width="300"></video>
+  
+                      <div @click="deleteDefaultVideo(defaultVideo.id)" class="w-5 h-5 bg-red-500 text-white flex justify-center items-center absolute top-[-10px] right-[-6px] rounded-lg cursor-pointer ">
+                        <i class="fa fa-close"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div v-if="videoSrc == null" class="flex h-full justify-center items-center w-full"> 
+                  <p>ویدیو انتخاب نشده !</p>
+                </div>
+              </div>
+            </div>
+
+
 
             <div class="bg-white border rounded-lg">
               <div class="border-b px-8 py-4">
@@ -312,7 +399,7 @@
                       </label>
                       <input
                         type="text"
-                        v-model="newsData.meta_title"
+                        v-model="postData.meta_title"
                         name="payment-name"
                         id="payment-name"
                         autocomplete="payment-name"
@@ -333,7 +420,7 @@
                           name="success"
                           rows="3"
                           class="block w-full rounded-md border-gray-300 shadow-sm focus:border-hamian focus:ring-hamian sm:text-sm h-32"
-                          v-model="newsData.meta_description"
+                          v-model="postData.meta_description"
                           placeholder="توضیحات متاتگ"
                         />
                       </div>
@@ -361,7 +448,7 @@
                               class="fa-duotone fa-duotone fa-tag text-hamian h-5 w-5 flex leading-[1px] pr-1"
                             ></i>
                           </div>
-                          <TagInput ref="tagInputRef" :modelValue="newsInfo.keywords" v-model="newsData.keywords"></TagInput>
+                          <TagInput ref="tagInputRef" :modelValue="newsInfo.keywords" v-model="postData.keywords"></TagInput>
                         </div>
                       </div>
                     </div>
@@ -382,7 +469,7 @@
         <div class="block p-4">
           <button
             type="button"
-            @click="editNewsData()"
+            @click="editpostData()"
             class="box-border relative z-0 inline-flex items-center justify-center w-full p-3 px-8 py-3 my-2 overflow-hidden font-medium text-white transition-all duration-300 bg-hamian rounded-md cursor-pointer group ease focus:outline-none"
           >
             <span
@@ -428,9 +515,23 @@
               class="border border-gray-200 text-left p-3 rounded-lg flex items-center cursor-text relative overflow-hidden"
               type="text"
               readonly
-              :value="`https://petoman.com/hamian/news/${newsData.slug}`"
+              :value="`https://petoman.com/hamian/news/${postData.slug}`"
             />
           </div>
+        </div>
+      </div>
+
+      <div class="mt-6 border border-gray-200 rounded-lg card">
+        <div class="flex items-center w-full p-4 border-b border-gray-200">
+          <i class="pl-2 text-2xl text-hamian fa-duotone fa-list"></i
+          ><span> انتخاب نوع نوشته </span>
+        </div>
+        <div class="block p-4">
+          <select v-model="postType" class="w-full border border-gray-300 rounded-lg">
+            <option value="text">نوشته ساده</option>
+            <option value="gallery">نوشته از نوع گالری</option>
+            <option value="video">نوشته از نوع ویدیو</option>
+          </select>
         </div>
       </div>
 
@@ -497,38 +598,40 @@
 <script>
 import { mapGetters } from 'vuex'
 import TagInput from "../Tag/TagInput.vue";
-// import ImageUploader from 'quill-image-uploader';
-// import BlotFormatter from 'quill-blot-formatter/dist/BlotFormatter'
+import Ckeditor from '@/components/Ckeditor/index.vue'
 import api from "@/axios/index.js";
 import Swal from 'sweetalert2'
 
 export default {
   components: {
     TagInput,
+    ckeditor: Ckeditor
   },
   async mounted(){
-    this.newsData.author_id = this.authadmin.id
+    this.postData.author_id = this.authadmin.id
     await this.getCategories();
 
     if(this.newsInfo != null){
-      this.newsData.id = this.newsInfo.id
-      this.newsData.title = this.newsInfo.title
-      this.newsData.slug = this.generateSlug(this.newsInfo.title);
-      this.newsData.date = this.newsInfo.date.split('-').join('/')
-      this.newsData.category_ids = this.newsInfo.category_ids.split(',').map(Number)
-      
-      this.newsInfo.categories.forEach((val , index) => {
-        this.category_titles = [...this.category_titles , val.title]
-      })
+      this.postData.id = this.newsInfo.id
+      this.postData.title = this.newsInfo.title
+      this.postData.slug = this.generateSlug(this.newsInfo.title);
+      this.postData.date = this.newsInfo.date;
 
-      this.newsData.content = this.newsInfo.content
-      this.newsData.summary_description = this.newsInfo.summary_description
-      this.newsData.meta_title = this.newsInfo.meta_title
-      this.newsData.meta_description = this.newsInfo.meta_description
-      this.newsData.keywords = this.newsInfo.keywords != null ? this.newsInfo.keywords.split(',') : []
-      this.seoImgSrc  = this.newsInfo.seo_image != null ? `${this.globalUrl}/storage/news/seo/${this.newsInfo.seo_image}`: ''
-      this.seoImgSrc2 = this.newsInfo.image != null ? `${this.globalUrl}/storage/news/${this.newsInfo.image}`: ''
+      // set category data
+      this.selectCategory(this.newsInfo.category_id , this.newsInfo.category.title)
       
+
+      this.postType = this.newsInfo.post_type
+      this.$refs.ckeditorRef.config.initialData = this.newsInfo.content
+
+      this.defaultGalleries = this.newsInfo.gallery_images
+      this.defaultVideo = this.newsInfo.video
+
+      this.postData.meta_title = this.newsInfo.meta_title
+      this.postData.meta_description = this.newsInfo.meta_description
+      this.postData.keywords = this.newsInfo.keywords != null ? this.newsInfo.keywords.split(',') : []
+      this.seoImgSrc  = this.newsInfo.seo_image != null ? `${this.globalUrl}/storage/${this.newsInfo.seo_image}`: ''
+      this.seoImgSrc2 = this.newsInfo.image != null ? `${this.globalUrl}/storage/${this.newsInfo.image}`: ''
     }
 
     
@@ -542,62 +645,24 @@ export default {
   },    
   data() {
     return {
+      postType: "text",
       loading: false,
       searchCatText: '',
       categoryList: [],
-      category_titles: [],
+      category_title: null,
       cat_search_result: [],
       placeholder: "دسته مورد نظر را انتخاب کنید",
       useRealInput: false,
       focused: false,
       category: false,
-      options: {
-        debug: "info",
-        modules: {
-          toolbar: ["bold", "italic", "underline"],
-          BlotFormatter: {},
-        },
-        placeholder: "نوشتن را شروع کنید...",
-        readOnly: false,
-        theme: "snow",
-      },
-      modules: [
-        {
-          name: 'ImageUploader',  
-          module: ImageUploader, 
-          options: {
-            upload: file => {
-              return new Promise((resolve, reject) => {
-                const formData = new FormData();
-                formData.append("quil_file", file);
-
-                api.post('/admin/news/quil-upload', formData)
-                .then(res => {
-                  resolve(res.data.url);
-                })
-                .catch(err => {
-                  reject("Upload failed");
-                  console.error("Error:", err)
-                })
-              })
-            }
-          }
-        },
-        {
-          name: 'blotFormatter',  
-          module: BlotFormatter, 
-          options: {}
-        }
-      ],
-      newsData: {
+      postData: {
         id: '',
         title: '',
         slug:'',
         date: '',
         author_id: '',
-        category_ids: [],
+        category_id: null,
         content: '',
-        summary_description: '',
         seo_image: '',
         meta_title: '',
         meta_description: '',
@@ -605,7 +670,13 @@ export default {
         image: ''
       },
       seoImgSrc: '',
-      seoImgSrc2: ''
+      seoImgSrc2: '',
+      gallerySrcs: [],
+      galleries: [],
+      defaultGalleries: [],
+      videoSrc: null,
+      videoFile: null,
+      defaultVideo: null
     };
   },
   methods: {
@@ -617,27 +688,23 @@ export default {
       }
     },
     selectCategory(id , name) {
-      const idsList = this.newsData.category_ids
-      const titleList = this.category_titles
+      const categoryId = this.postData.category_id
+      const categoryTitle = this.category_title
       // add ids
-      if(idsList.includes(id)){
-        const filteredId = idsList.filter((val , index) => {
-          return val != id
-        })
-        this.newsData.category_ids = filteredId
+      if(categoryId == id){
+        this.postData.category_id = null
       }else{
-        this.newsData.category_ids = [...this.newsData.category_ids , id]
+        this.postData.category_id = id
       }
       // add names
 
-      if(titleList.includes(name)){
-        const filteredNames = titleList.filter((val , index) => {
-          return val != name
-        })
-        this.category_titles = filteredNames
+      if(categoryTitle == name){
+        this.category_title = null
       }else{
-        this.category_titles = [...this.category_titles , name]
+        this.category_title = name
       }
+
+      this.focused = false
     },
     findText(value) {
       const category = this.categories.filter((category) => {
@@ -684,8 +751,8 @@ export default {
         }
     },
     set_news_title(e) {
-      this.newsData.title = e.target.value;
-      this.newsData.slug = this.generateSlug(this.newsData.title);
+      this.postData.title = e.target.value;
+      this.postData.slug = this.generateSlug(this.postData.title);
     },
     generateSlug(text){
       return text
@@ -694,7 +761,7 @@ export default {
         .replace(/ /g, "-");
     },
     set_seo_image(e){
-      this.newsData.seo_image = e.target.files[0];
+      this.postData.seo_image = e.target.files[0];
       this.createFile(e.target.files[0]);
     },
     createFile(file) {
@@ -715,10 +782,10 @@ export default {
     remove_seo_image() {
       this.seoImgSrc = '';
       this.$refs.seo_image_input.value = ""
-      this.newsData.seo_image = '';
+      this.postData.seo_image = '';
     },
     set_index_image(e){
-      this.newsData.image = e.target.files[0];
+      this.postData.image = e.target.files[0];
       this.createIndexFile(e.target.files[0]);
     },
     createIndexFile(file) {
@@ -739,13 +806,13 @@ export default {
     remove_index_image() {
       this.seoImgSrc2 = '';
       this.$refs.index_image_input.value = ""
-      this.newsData.image = '';
+      this.postData.image = '';
     },
-    async editNewsData() {
+    async editpostData() {
       let validate = this.validateData()
       if(validate == true){
         this.loading = true
-        const result = await this.$store.dispatch("edit_news_data" , this.newsData)
+        const result = await this.$store.dispatch("edit_news_data" , this.postData)
         if(result.status == 200){
           this.loading = false
           this.showSwal("پیغام موفقیت آمیز" , result.message , 'success')
@@ -758,14 +825,14 @@ export default {
       }
     },
     validateData(){
-      if(this.newsData.title == ''){
-        return "عنوان خبر را وارد کنید"
-      }else if(this.newsData.date == '') {
-        return "تاریخ انتشار خبر انتخاب نشده"
-      }else if(this.newsData.category_ids.length == 0) {
-        return "لطفا دسته بندی مربوط به خبر را انتخاب کنید"
-      }else if(this.newsData.content == '') {
-        return "محتوای خبر را وارد کنید"
+      if(this.postData.title == ''){
+        return "عنوان نوشته را وارد کنید"
+      }else if(this.postData.date == '') {
+        return "تاریخ انتشار نوشته انتخاب نشده"
+      }else if(this.postData.category_id == null) {
+        return "لطفا دسته بندی مربوط به نوشته را انتخاب کنید"
+      }else if(this.postData.content == '') {
+        return "محتوای نوشته را وارد کنید"
       }else {
         return true
       }
@@ -776,6 +843,89 @@ export default {
         text: text,
         icon: icon
       });
+    },
+    handleGalleryChange(event) {
+      const selectedFiles = event.target.files;
+      this.gallerySrcs = [];
+      this.galleries = [];
+
+      for (let i = 0; i < selectedFiles.length; i++) {
+        const file = selectedFiles[i];
+        this.galleries.push(file);
+
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          this.gallerySrcs.push(e.target.result);
+        };
+        reader.readAsDataURL(file);
+      }
+    },
+    handleVideoChange(event) {
+      const selectedFile = event.target.files[0];
+      if (selectedFile) {
+        this.videoFile = selectedFile;
+
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          this.videoSrc = e.target.result;
+        };
+        reader.readAsDataURL(selectedFile);
+      } else {
+        this.videoSrc = null;
+        this.videoFile = null;
+      }
+    },
+    deleteGalleryImage(index) {
+      this.gallerySrcs.splice(index, 1);
+      this.galleries.splice(index, 1);
+    },
+    deleteVideo() {
+      this.videoSrc = null;
+      this.videoFile = null
+    },
+    deleteDefaultGalleryImage(index , id) {
+      Swal.fire({
+          title: "هشدار",
+          text: "آیا میخواهید این عکس از لیست گالری حذف شود؟",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#9d2c48",
+          cancelButtonColor: "#555",
+          cancelButtonText: "خیر",
+          confirmButtonText: "بله",
+        }).then(async (result) => {
+          if (result.isConfirmed) {
+            const result = await this.$store.dispatch("remove_gallery_image" , {id: id})
+            if(result.status == 200){
+              this.showSwal("پیغام موفقیت آمیز" , result.message , "success")
+              this.defaultGalleries.splice(index , 1)
+            }else{
+              this.showSwal("پیغام خطا" , result.message , "error")
+            }
+          }
+        });
+    },
+    deleteDefaultVideo(id) {
+      Swal.fire({
+          title: "هشدار",
+          text: "آیا میخواهید این ویدیو حذف شود؟",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#9d2c48",
+          cancelButtonColor: "#555",
+          cancelButtonText: "خیر",
+          confirmButtonText: "بله",
+        }).then(async (result) => {
+          if (result.isConfirmed) {
+            const result = await this.$store.dispatch("remove_video" , {id: id})
+            if(result.status == 200){
+              this.showSwal("پیغام موفقیت آمیز" , result.message , "success")
+              this.defaultVideo = null
+            }else{
+              this.showSwal("پیغام خطا" , result.message , "error")
+            }
+          }
+        });
     }
   },
   computed: {

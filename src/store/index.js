@@ -379,6 +379,52 @@ const store = createStore({
         }
       },
 
+      async remove_gallery_image(context , data) {
+        const token = cookies.get("_token")
+        const result = await HTTP.post("/admin/admin-posts/delete-gallery", data ,{
+          headers: {
+            "Authorization": "Bearer "+ token
+          }
+        })
+
+        if(result.status == 200){
+            if(result.data){
+                return result.data
+            }else {
+                return {
+                  "message": "failed"
+                }
+            }
+        }else{
+            return {
+                "message": "failed"
+            }
+        }
+      },
+
+      async remove_video(context , data) {
+        const token = cookies.get("_token")
+        const result = await HTTP.post("/admin/admin-posts/delete-video", data ,{
+          headers: {
+            "Authorization": "Bearer "+ token
+          }
+        })
+
+        if(result.status == 200){
+            if(result.data){
+                return result.data
+            }else {
+                return {
+                  "message": "failed"
+                }
+            }
+        }else{
+            return {
+                "message": "failed"
+            }
+        }
+      },
+
       // pages
       async save_page_data(context , data){
         const token = cookies.get("_token")

@@ -89,7 +89,7 @@
                   class="grid lg:grid-cols-4 gap-4 md:grid-cols-2 sm:grid-cols-1 xs:grid-cols-1"
                 >
                   <div class="w-full">
-                    <RouterLink to="/add-news">
+                    <RouterLink to="/add-posts">
                       <button
                         class="box-border relative z-0 inline-flex items-center justify-end w-full p-2.5 overflow-hidden font-medium text-white transition-all duration-300 bg-hamian rounded-md cursor-pointer group ease focus:outline-none"
                       >
@@ -131,27 +131,6 @@
                   </div>
 
                   <div class="w-full">
-                    <export-excel
-                      :data="newsInformation.newsList"
-                      :fields="excelFields"
-                      title="لیست اخبار حامیان پت و من"
-                      :name="`news.xls`"
-                      class="box-border relative z-0 flex w-full items-center justify-center p-2.5 overflow-hidden font-medium text-gray-400 transition-all duration-300 border rounded-md cursor-pointer group ease focus:outline-none"
-                    >
-                      <span
-                        class="absolute bottom-0 right-0 w-8 h-20 -mb-8 -mr-5 transition-all duration-300 ease-out transform rotate-45 translate-x-1 bg-white opacity-10 group-hover:translate-x-0"
-                      ></span
-                      ><span
-                        class="absolute top-0 left-0 w-20 h-8 -mt-1 -ml-12 transition-all duration-300 ease-out transform -rotate-45 -translate-x-1 bg-white opacity-10 group-hover:translate-x-0"
-                      ></span
-                      ><span
-                        class="relative z-20 flex items-center justify-center w-full text-center"
-                        ><i
-                          class="pl-2 text-2xl text-gray-400 fa-light fa-file-export"
-                        ></i
-                        ><span class="w-full"> برون بری</span></span
-                      >
-                    </export-excel>
                   </div>
 
                   <div></div>
@@ -219,7 +198,7 @@
                                     <div class="flex px-6 py-2 text-right">
                                       <div class="flex items-center">
                                         <img
-                                          :src="`${globalUrl}/storage/news/${row.image}`"
+                                          :src="`${globalUrl}/storage/${row.image}`"
                                           class="w-10 h-10 rounded-lg mx-auto ml-2"
                                         />
 
@@ -312,7 +291,7 @@
                                                       <span
                                                         class="mr-1 font-medium"
                                                       >
-                                                        <span v-for="(cat , index) in row.categories">{{ cat.title }}<span v-if="index != row.categories.length - 1">,</span></span>
+                                                        <span >{{ row.category.title }}</span>
                                                       </span>
                                                     </div>
                                                   </div>
@@ -402,7 +381,7 @@
                                                             ></i>
                                                           </div>
                                                           <RouterLink
-                                                            :to="`/edit-news/${row.id}`"
+                                                            :to="`/edit-posts/${row.id}`"
                                                           >
                                                             <div
                                                               class="w-4 ml-4 transform cursor-pointer hover:text-gray-500 hover:scale-110"
@@ -510,7 +489,7 @@
 
                               <td class="p-2 text-right mx-auto">
                                 <img
-                                  :src="`${globalUrl}/storage/news/${row.image}`"
+                                  :src="`${globalUrl}/storage/${row.image}`"
                                   class="w-10 h-10 rounded-lg mx-auto"
                                 />
                               </td>
@@ -537,7 +516,7 @@
                               </td>
 
                               <td class="p-2 text-center text-[15px]">
-                                <span v-for="(cat , index) in row.categories">{{ cat.title }}<span v-if="index != row.categories.length - 1">,</span></span>
+                                <span >{{ row.category.title }}</span>
                               </td>
 
                               <td class="p-2 text-center mx-auto text-[15px]">
@@ -584,7 +563,7 @@
                                     ></i>
                                   </div>
 
-                                  <RouterLink :to="`/edit-news/${row.id}`">
+                                  <RouterLink :to="`/edit-posts/${row.id}`">
                                     <div
                                       class="w-4 transform cursor-pointer hover:text-gray-500 hover:scale-110"
                                     >
@@ -642,6 +621,7 @@ import DatasetSearch from "@/components/DataTable/DatasetSearch.vue";
 import DatasetShow from "@/components/DataTable/DatasetShow.vue";
 import DataAction from "@/components/DataTable/DataAction.vue";
 import DatasetStatus from "@/components/DataTable/DatasetStatus.vue";
+
 export default {
   props: {
     newsInformation: {
@@ -706,7 +686,7 @@ export default {
         },
 
         {
-          name: "دسته ها",
+          name: "از دسته",
           field: "blogLevel",
           size: "w-auto",
           center: "justify-center",
@@ -796,7 +776,7 @@ export default {
       if(state == 0) {
         Swal.fire({
           title: "هشدار",
-          text: "آیا میخواهید این خبر به لیست ویژه ها بپیوندد؟",
+          text: "آیا میخواهید این نوشته به لیست ویژه ها بپیوندد؟",
           icon: "warning",
           showCancelButton: true,
           confirmButtonColor: "#9d2c48",
@@ -819,7 +799,7 @@ export default {
       }else {
         Swal.fire({
           title: "هشدار",
-          text: "آیا میخواهید این خبر از لیست ویژه ها حذف شود؟",
+          text: "آیا میخواهید این نوشته از لیست ویژه ها حذف شود؟",
           icon: "warning",
           showCancelButton: true,
           confirmButtonColor: "#9d2c48",
