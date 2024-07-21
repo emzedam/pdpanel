@@ -5,6 +5,7 @@
                 :list="items"
                 :group="{ name: 'myitems', pull: 'clone', put: false }"
                 item-key="id"
+                :clone="cloneEl"
             >
                 <template #item="{ element }">
                     <div :style="{backgroundImage: `url(/theme/${element.image})`}" class="w-full h-[90px] bg-cover bg-center cursor-pointer flex items-center justify-center rounded-lg mb-3">
@@ -58,37 +59,83 @@ import ThemeContent from './ThemeContent.vue'
 import {ref} from 'vue'
 import draggable from "vuedraggable";
 
+let idGlobal = 8;
 
 const items = ref([
     { 
         id: 1,
+        type: "sectionOne",
         name: 'حالت اول',
         image: '1.png',
+        tools: {
+          hasCategoryItem: true,
+          multipleCategory: false,
+          hasTagItem: false,
+        }
     },
     { 
         id: 2,
+        type: "sectionTwo",
         name: 'حالت دوم',
         image: '2.png',
+        tools: {
+          hasCategoryItem: true,
+          multipleCategory: true,
+          hasTagItem: false,
+        }
     },
     { 
         id: 3,
+        type: "sectionThree",
         name: 'حالت سوم',
         image: '3.png',
+        tools: {
+          hasCategoryItem: true,
+          multipleCategory: false,
+          hasTagItem: false,
+        }
     },
     { 
         id: 4,
         name: 'حالت چهارم',
+        type: "sectionFour",
         image: '4.png',
+        tools: {
+          hasCategoryItem: true,
+          multipleCategory: true,
+          hasTagItem: false,
+        }
     },
     { 
         id: 5,
         name: 'حالت پنجم',
+        type: "sectionFive",
         image: '5.png',
+        tools: {
+          hasCategoryItem: true,
+          multipleCategory: false,
+          hasTagItem: false,
+        }
     },
     { 
         id: 6,
         name: 'حالت ششم',
+        type: "sectionSix",
         image: '6.png',
+        tools: {
+          hasCategoryItem: false,
+          multipleCategory: false,
+          hasTagItem: true,
+        }
     },
 ])
+
+const cloneEl = (item) => {
+  // if(type == "sectionOne"){
+    return {
+      ...item,
+      category: null
+    }
+  // }
+}
 </script>
