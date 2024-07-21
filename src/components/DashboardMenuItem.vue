@@ -340,7 +340,7 @@
           </li>
   
           <li v-if="authadmin && authadmin.role == 1">
-            <router-link to="/theme/">
+            <router-link to="/setting/">
               <button
                 class="middle none font-fa font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-2 rounded-lg text-gray-500 active:opacity-[0.85] active:bg-green-50/20 focus:bg-gray-100 focus:text-gray-500 w-full flex justify-between items-center gap-4 px-4 capitalize"
                 type="button"
@@ -353,7 +353,27 @@
                 <p
                   class="block w-full text-base antialiased font-medium leading-relaxed text-right capitalize font-fa"
                 >
-                  قالب سایت
+                  تنظیمات سایت
+                </p>
+              </button>
+            </router-link>
+          </li>
+
+          <li v-if="authadmin && authadmin.role == 1">
+            <router-link to="/theme-setting/">
+              <button
+                class="middle none font-fa font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-2 rounded-lg text-gray-500 active:opacity-[0.85] active:bg-green-50/20 focus:bg-gray-100 focus:text-gray-500 w-full flex justify-between items-center gap-4 px-4 capitalize"
+                type="button"
+              >
+                <span class="pr-1">
+                  <i
+                    class="fa-light fa-layer-group text-[18px] text-slate-500"
+                  ></i>
+                </span>
+                <p
+                  class="block w-full text-base antialiased font-medium leading-relaxed text-right capitalize font-fa"
+                >
+                  تنظیمات قالب
                 </p>
               </button>
             </router-link>

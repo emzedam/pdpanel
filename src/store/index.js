@@ -335,7 +335,7 @@ const store = createStore({
         }
       },
 
-      async edit_news_data(context , data){
+      async edit_post_data(context , data){
         const token = cookies.get("_token")
         let formData = new FormData()
 
@@ -344,18 +344,31 @@ const store = createStore({
         formData.append("slug" , data.slug)
         formData.append("date" , data.date)
         formData.append("author_id" , data.author_id)
-        formData.append("category_ids" , data.category_ids)
-        if(data.image != '') {
-          formData.append("image" , data.image)
-        }
         formData.append("content" , data.content)
-        formData.append("summary_description" , data.summary_description)
-        if(data.seo_image != '') {
-          formData.append("seo_image" , data.seo_image)
-        }
         formData.append("meta_title" , data.meta_title)
         formData.append("meta_description" , data.meta_description)
         formData.append("keywords" , data.keywords)
+        formData.append("type" , data.postType)
+        formData.append("category_id" , data.category_id)
+
+        if(data.image != '') {
+          formData.append("image" , data.image)
+        }
+
+
+        if(data.seo_image != '') {
+          formData.append("seo_image" , data.seo_image)
+        }
+
+        if(data.galleries.length != 0) {
+          for(let i = 0 ; i < data.galleries.length ; i++){
+            formData.append("images["+i+"]", data.galleries[i])
+          }
+        }
+
+        if(data.videoFile != null) {
+          formData.append("video", data.videoFile)
+        }
 
 
         const result = await HTTP.post("/admin/admin-posts/edit", formData ,{

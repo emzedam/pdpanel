@@ -325,7 +325,7 @@
                     </div>
                   </div>
                 </div>
-                <div v-if="videoSrc == null" class="flex h-full justify-center items-center w-full"> 
+                <div v-if="videoSrc == null && defaultVideo == null" class="flex h-full justify-center items-center w-full"> 
                   <p>ویدیو انتخاب نشده !</p>
                 </div>
               </div>
@@ -464,7 +464,7 @@
       <div class="mt-2 border border-gray-200 rounded-lg card">
         <div class="flex items-center w-full p-4 border-b border-gray-200">
           <i class="pl-2 text-2xl text-hamian fa-duotone fa-ballot-check"></i
-          ><span>افزودن نوشته جدید</span>
+          ><span>ویرایش نوشته </span>
         </div>
         <div class="block p-4">
           <button
@@ -812,7 +812,16 @@ export default {
       let validate = this.validateData()
       if(validate == true){
         this.loading = true
-        const result = await this.$store.dispatch("edit_news_data" , this.postData)
+
+        this.postData.content = this.$refs.ckeditorRef.config.initialData
+        this.postData = {
+          ...this.postData, 
+          postType : this.postType,
+          galleries: this.galleries,
+          videoFile: this.videoFile
+        }
+
+        const result = await this.$store.dispatch("edit_post_data" , this.postData)
         if(result.status == 200){
           this.loading = false
           this.showSwal("پیغام موفقیت آمیز" , result.message , 'success')
@@ -831,8 +840,12 @@ export default {
         return "تاریخ انتشار نوشته انتخاب نشده"
       }else if(this.postData.category_id == null) {
         return "لطفا دسته بندی مربوط به نوشته را انتخاب کنید"
-      }else if(this.postData.content == '') {
+      }else if(this.$refs.ckeditorRef.config.initialData == '') {
         return "محتوای نوشته را وارد کنید"
+      }else if(this.postType == "gallery" && this.galleries.length == 0 && this.defaultGalleries.length == 0) {
+        return "گالری تصاویر را انتخاب کنید"
+      }else if(this.postType == "video" && this.videoFile == null && this.defaultVideo == null) {
+        return "ویدیو مربوطه را انتخاب کنید"
       }else {
         return true
       }

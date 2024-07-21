@@ -6,7 +6,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Login from "../views/Auth/Login.vue";
 
 import HomeView from '../views/HomeView.vue'
-import ThemeView from '../views/ThemeView.vue'
+import SettingView from '../views/SettingView.vue'
 
 // صفحات
 import AddPage from '../views/Pages/AddPageView.vue'
@@ -35,6 +35,9 @@ import EditCategory from '../views/Category/Edit.vue'
 // not found page
 import NotFound from "@/views/NotFound/Index.vue";
 
+// theme control
+import ThemeControl from "@/views/Theme/index.vue";
+
 const { cookies } = useCookies();
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -57,9 +60,17 @@ const router = createRouter({
        
       }
     }, {
-      path: '/theme',
+      path: '/setting',
+      name: 'setting',
+      component: SettingView,
+      meta: { 
+        requiresAuth: true,
+        requiresRole: 1
+      }
+    }, {
+      path: '/theme-setting',
       name: 'theme',
-      component:ThemeView,
+      component: ThemeControl,
       meta: { 
         requiresAuth: true,
         requiresRole: 1
@@ -67,7 +78,7 @@ const router = createRouter({
     }, {
       path: '/add-page',
       name: 'AddPage',
-      component:AddPage,
+      component: AddPage,
       meta: { 
         requiresAuth: true,
       }
@@ -238,6 +249,8 @@ router.beforeEach((to, from, next) => {
     }else {
       next();
     }
+  }else {
+    next();
   }
 });
 
