@@ -703,7 +703,6 @@ export default {
             })
             
           })
-          console.log(this.cat_search_result)
         }else{
           this.cat_search_result = this.categoryList
           this.searchCatText = ''

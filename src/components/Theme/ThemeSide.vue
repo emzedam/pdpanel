@@ -71,6 +71,9 @@ const items = ref([
           hasCategoryItem: true,
           multipleCategory: false,
           hasTagItem: false,
+          hasIconName: false,
+          hasTitle: false,
+          maxSelectCount: 1
         }
     },
     { 
@@ -82,6 +85,9 @@ const items = ref([
           hasCategoryItem: true,
           multipleCategory: true,
           hasTagItem: false,
+          hasIconName: true,
+          hasTitle: true,
+          maxSelectCount: 6
         }
     },
     { 
@@ -93,6 +99,9 @@ const items = ref([
           hasCategoryItem: true,
           multipleCategory: false,
           hasTagItem: false,
+          hasIconName: true,
+          hasTitle: true,
+          maxSelectCount: 1
         }
     },
     { 
@@ -104,6 +113,9 @@ const items = ref([
           hasCategoryItem: true,
           multipleCategory: true,
           hasTagItem: false,
+          hasIconName: true,
+          hasTitle: true,
+          maxSelectCount: 4
         }
     },
     { 
@@ -115,6 +127,9 @@ const items = ref([
           hasCategoryItem: true,
           multipleCategory: false,
           hasTagItem: false,
+          hasIconName: true,
+          hasTitle: true,
+          maxSelectCount: 1 
         }
     },
     { 
@@ -126,6 +141,9 @@ const items = ref([
           hasCategoryItem: false,
           multipleCategory: false,
           hasTagItem: true,
+          hasIconName: true,
+          hasTitle: true,
+          maxSelectCount: 6 
         }
     },
 ])
@@ -134,7 +152,11 @@ const cloneEl = (item) => {
   // if(type == "sectionOne"){
     return {
       ...item,
-      category: null
+      category_id: null,
+      category_title: null,
+      title: null,
+      icon: null,
+      tags: null
     }
   // }
 }
