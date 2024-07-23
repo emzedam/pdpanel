@@ -30,6 +30,10 @@
                 </div>
               </button>
               <div v-if="activeIndex === index" class="p-4">
+                <div v-if="element.tools.isNewersOption" class="border-b py-2">
+                  <input type="checkbox" id="newer" class="ml-2 border border-gray-400" v-model="element.isNewers"></input>
+                  <label for="newer" class="text-gray-700 text-sm">در این قسمت جدیدترین ها بارگزاری شود</label>
+                </div>
                 <div v-if="element.tools.hasCategoryItem">
                     <Category 
                         :cat_search_result="cat_search_result"
@@ -41,12 +45,13 @@
                     />
                 </div>
                 <div v-if="element.tools.hasTagItem">
-                    <label for="tag"> انتخاب تگ ها : </label>
-                    <select v-model="element.tags" id="tag" class="w-full mt-2 rounded-lg border border-gray-200 cursor-pointer">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                    </select>
+                  <TagList
+                    :tag_search_result="tag_search_result"
+                    :elemIndex="index"
+                    :currentElem="element"
+                    @searchTag="(text) => do_search_tag(text)"
+                    @doSelectMultipleTag="(data) => doSelectMultipleTag(data)"
+                  />
                 </div>
                 <div v-if="element.tools.hasTitle" class="mt-3">
                     <label for="title"> عنوان : </label>
@@ -70,6 +75,8 @@ import { ref, onMounted } from "vue";
 import draggable from "vuedraggable";
 import {useStore} from 'vuex'
 import Category from './CategoryConfig/index.vue'
+import TagList from './Tags/index.vue'
+import Swal from 'sweetalert2'
 
 
 const store = useStore()
@@ -77,23 +84,26 @@ const activeIndex = ref(null);
 const list2 = ref([]);
 const categoryList = ref([])
 const cat_search_result = ref([])
+const tag_search_result = ref([])
+const tagsList = ref([])
 
 
 
 const log = (evt) => {
-  console.log(list2.value);
-  console.log(evt);
+  // console.log(list2.value);
+  // console.log(evt);
 };
 
 onMounted(() => {
     getCategories()
+    getTags()
 })
 
 
 
 const selectCategory = (data) => {
-    list2.value[data.index].category_id = data.id
-    list2.value[data.index].category_title = data.title
+    list2.value[data.index].category_id[0] = data.id
+    list2.value[data.index].category_title[0] = data.title
 }
 
 const toggleAccordion = (index) => {
@@ -109,7 +119,6 @@ const removeAccordion = (index) => {
     list2.value.splice(index , 1)
 }
 
-
 const getCategories = async () => {
     const result = await store.dispatch("get_categories_list");
     if (result.status == 200) {
@@ -121,6 +130,16 @@ const getCategories = async () => {
     }
 }
 
+const getTags = async () => {
+    const result = await store.dispatch("get_tags_list");
+    if (result.status == 200) {
+      tagsList.value = result.result;
+      tag_search_result.value = result.result;
+    } else {
+        tagsList.value = [];
+        tag_search_result.value = [];
+    }
+}
 
 const do_search_category = (text) => {
     if(text != '') {
@@ -150,22 +169,57 @@ const do_search_category = (text) => {
 }
 
 const doSelectMultipleCat = (data) => {
-    list2.value[data.index].category_id = list2.value[data.index].category_id == null ? [] : list2.value[data.index].category_id
-    list2.value[data.index].category_title = list2.value[data.index].category_title == null ? [] : list2.value[data.index].category_title
-
     if(list2.value[data.index].category_id.includes(data.id)) {
         list2.value[data.index].category_id.splice(list2.value[data.index].category_id.indexOf(data.id) , 1)
         list2.value[data.index].category_title.splice(list2.value[data.index].category_title.indexOf(data.title) , 1)
-        
-        if(list2.value[data.index].category_id.length == 0) {
-            list2.value[data.index].category_id = null
-            list2.value[data.index].category_title = null
-        }
     }else {
+      if(list2.value[data.index].category_id.length < list2.value[data.index].tools.maxSelectCount) {
         list2.value[data.index].category_id.push(data.id)
         list2.value[data.index].category_title.push(data.title)
-        
+      }else {
+        showSwal(" هشدار" , " حداکثر دسته بندی که میتوانید انتخاب کنید"+list2.value[data.index].tools.maxSelectCount+"عدد میباشد " , 'warning')
+      }
     }
 }
+
+const do_search_tag = (text) => {
+    if(text != '') {
+        tag_search_result.value = []
+        tagsList.value.forEach((val , index) => {
+          if(val.name.indexOf(text) > -1) {
+              tag_search_result.value = [...tag_search_result.value , val]
+          }
+        })
+    }else{
+        tag_search_result.value = tagsList.value
+        text = ''
+    }
+}
+
+const doSelectMultipleTag = (data) => {
+  if(list2.value[data.index].tag_id.includes(data.id)) {
+      list2.value[data.index].tag_id.splice(list2.value[data.index].tag_id.indexOf(data.id) , 1)
+      list2.value[data.index].tag_title.splice(list2.value[data.index].tag_title.indexOf(data.title) , 1)
+  }else {
+    if(list2.value[data.index].tag_id.length < list2.value[data.index].tools.maxSelectCount) {
+      list2.value[data.index].tag_id.push(data.id)
+      list2.value[data.index].tag_title.push(data.title)
+    }else {
+      showSwal(" هشدار" , " حداکثر تگ که میتوانید انتخاب کنید"+list2.value[data.index].tools.maxSelectCount+"عدد میباشد " , 'warning')
+    }
+  }
+}
+
+const showSwal = (title , text , icon) => {
+  Swal.fire({
+    title: title,
+    text: text,
+    icon: icon
+  });
+}
+
+defineExpose({
+  list2
+})
 
 </script>

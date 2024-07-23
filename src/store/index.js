@@ -1031,13 +1031,60 @@ const store = createStore({
         }        
         
       },
+
+      // template api 
+      async get_tags_list(context) {
+        const token = cookies.get("_token")
+        const result = await HTTP.get("/admin/template/get-tags" ,{
+          headers: {
+            "Authorization": "Bearer "+ token
+          }
+        })
+
+        if(result.status == 200){
+            if(result.data){
+                return result.data
+            }else{
+                return {
+                    "message": "failed"
+                }
+            }
+        }else{
+            return {
+                "message": "failed"
+            }
+        }
+      },
+
+      async save_template(context , data) {
+        const token = cookies.get("_token")
+        const result = await HTTP.post("/admin/template/save" , {data: JSON.stringify(data)} ,{
+          headers: {
+            "Authorization": "Bearer "+ token
+          }
+        })
+
+        if(result.status == 200){
+            if(result.data){
+                return result.data
+            }else{
+                return {
+                    "message": "failed"
+                }
+            }
+        }else{
+            return {
+                "message": "failed"
+            }
+        }
+      }
     },
 
     // getters
     getters:{
-        get_authadmin(state){
-            return state.authadmin
-        },
+      get_authadmin(state){
+          return state.authadmin
+      },
     }
 })
 

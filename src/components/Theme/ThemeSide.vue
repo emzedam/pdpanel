@@ -20,7 +20,7 @@
           </div>
     </div>
 
-    <ThemeContent />
+    <ThemeContent ref="templateContent" />
 
     <div class="col-span-1">
 
@@ -32,6 +32,7 @@
             <div class="block p-4">
               <button
                 type="button"
+                @click="saveTemplate()"
                 class="box-border relative z-0 inline-flex items-center justify-center w-full p-3 px-8 py-3 my-2 overflow-hidden font-medium text-white transition-all duration-300 bg-orange-500 rounded-md cursor-pointer group ease focus:outline-none"
               >
                 <span
@@ -44,9 +45,10 @@
                   class="relative z-20 flex items-center justify-center w-full text-center"
                   ><i class="pl-2 text-2xl text-white fa-duotone fa-arrow-up-from-bracket"></i
                   ><span class="w-full">
-                   ثبت تغییرات
-                  </span></span
-                >
+                    <div class="lds-ring" v-if="loading == true"><div></div><div></div><div></div><div></div></div>
+                    <span v-else>ثبت تغییرات</span>
+                  </span>
+                </span>
               </button>
             </div>
           </div>
@@ -58,8 +60,13 @@
 import ThemeContent from './ThemeContent.vue'
 import {ref} from 'vue'
 import draggable from "vuedraggable";
+import {useStore} from 'vuex'
+import Swal from 'sweetalert2'
 
-let idGlobal = 8;
+let   idGlobal = 8;
+const loading  = ref(false)
+const store    = useStore()
+const templateContent = ref(null)
 
 const items = ref([
     { 
@@ -73,7 +80,8 @@ const items = ref([
           hasTagItem: false,
           hasIconName: false,
           hasTitle: false,
-          maxSelectCount: 1
+          maxSelectCount: 1,
+          isNewersOption: true  
         }
     },
     { 
@@ -87,7 +95,8 @@ const items = ref([
           hasTagItem: false,
           hasIconName: true,
           hasTitle: true,
-          maxSelectCount: 6
+          maxSelectCount: 6,
+          isNewersOption: true  
         }
     },
     { 
@@ -101,7 +110,8 @@ const items = ref([
           hasTagItem: false,
           hasIconName: true,
           hasTitle: true,
-          maxSelectCount: 1
+          maxSelectCount: 1,
+          isNewersOption: true  
         }
     },
     { 
@@ -115,7 +125,8 @@ const items = ref([
           hasTagItem: false,
           hasIconName: true,
           hasTitle: true,
-          maxSelectCount: 4
+          maxSelectCount: 4,
+          isNewersOption: false  
         }
     },
     { 
@@ -129,7 +140,8 @@ const items = ref([
           hasTagItem: false,
           hasIconName: true,
           hasTitle: true,
-          maxSelectCount: 1 
+          maxSelectCount: 1,
+          isNewersOption: true  
         }
     },
     { 
@@ -143,21 +155,165 @@ const items = ref([
           hasTagItem: true,
           hasIconName: true,
           hasTitle: true,
-          maxSelectCount: 6 
+          maxSelectCount: 6,
+          isNewersOption: false 
         }
     },
 ])
 
 const cloneEl = (item) => {
-  // if(type == "sectionOne"){
     return {
       ...item,
-      category_id: null,
-      category_title: null,
+      category_id: [],
+      category_title: [],
+      tag_id: [],
+      tag_title: [],
       title: null,
       icon: null,
-      tags: null
+      isNewers: false
     }
-  // }
 }
+
+const saveTemplate = () => {
+  let validateResult = validateData();
+  if(validateResult == true){
+    loading.value = true
+    const result = store.dispatch("save_template" , templateContent.value.list2)
+    if(result.status == 200) {
+      loading.value = false
+      showSwal("موفقیت آمیز" , result.message , "success")
+    }else {
+      loading.value = false
+      // showSwal("خطا" , result.message , "error")
+    }
+  }else {
+    showSwal("خطا" , validateResult , "error")
+  }
+}
+
+const validateData = () => {
+  let error = true
+  if(templateContent.value.list2.length != 0) {
+    templateContent.value.list2.forEach(item => {
+      if(item.type == "sectionOne") {
+        if(item.category_id.length == 0) {
+          error = "لطفا دسته بندی را در حالت اول مشخص کنید"
+        }
+      }else if(item.type == "sectionTwo"){
+        if(item.category_id.length == 0) {
+          error = "لطفا دسته بندی را در حالت دوم مشخص کنید"
+        }else if(item.title == null) {
+          error = "لطفا عنوان را در حالت دوم وارد کنید"
+        }else if(item.icon == null) {
+          error = "لطفا آیکون را در حالت دوم وارد کنید"
+        }
+      }else if(item.type == "sectionThree"){
+        if(item.category_id.length == 0) {
+          error = "لطفا دسته بندی را در حالت سوم مشخص کنید"
+        }else if(item.title == null) {
+          error = "لطفا عنوان را در حالت سوم وارد کنید"
+        }else if(item.icon == null) {
+          error = "لطفا آیکون را در حالت سوم وارد کنید"
+        }
+      }else if(item.type == "sectionFour"){
+        if(item.category_id.length == 0) {
+          error = "لطفا دسته بندی را در حالت چهارم مشخص کنید"
+        }else if(item.title == null) {
+          error = "لطفا عنوان را در حالت چهارم وارد کنید"
+        }else if(item.icon == null) {
+          error = "لطفا آیکون را در حالت چهارم وارد کنید"
+        }
+      }else if(item.type == "sectionFour"){
+        if(item.category_id.length == 0) {
+          error = "لطفا دسته بندی را در حالت چهارم مشخص کنید"
+        }else if(item.title == null) {
+          error = "لطفا عنوان را در حالت چهارم وارد کنید"
+        }else if(item.icon == null) {
+          error = "لطفا آیکون را در حالت چهارم وارد کنید"
+        }
+      }else if(item.type == "sectionFive"){
+        if(item.category_id.length == 0) {
+          error = "لطفا دسته بندی را در حالت پنجم مشخص کنید"
+        }else if(item.title == null) {
+          error = "لطفا عنوان را در حالت پنجم وارد کنید"
+        }else if(item.icon == null) {
+          error = "لطفا آیکون را در حالت پنجم وارد کنید"
+        }
+      }else if(item.type == "sectionSix"){
+        if(item.tag_id.length == 0) {
+          error = "لطفا تگ ها را در حالت ششم مشخص کنید"
+        }else if(item.title == null) {
+          error = "لطفا عنوان را در حالت ششم وارد کنید"
+        }else if(item.icon == null) {
+          error = "لطفا آیکون را در حالت ششم وارد کنید"
+        }
+      }
+    });
+  }else {
+    error = "آیتمی را اضافه نکرده اید !"
+  }
+
+  return error
+}
+
+const showSwal = (title , text , icon) => {
+  Swal.fire({
+    title: title,
+    text: text,
+    icon: icon
+  });
+}
+
 </script>
+
+
+<style>
+.vpd-controls.direction-prev > button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lds-ring {
+  /* change color here */
+  color: #1c4c5b
+}
+.lds-ring,
+.lds-ring div {
+  box-sizing: border-box;
+}
+.lds-ring {
+  display: inline-block;
+  position: relative;
+  width: 18px;
+  height: 18px;
+}
+.lds-ring div {
+  box-sizing: border-box;
+    display: block;
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border: 3px solid currentColor;
+    border-radius: 50%;
+    animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    border-color: #fff transparent transparent transparent;
+}
+.lds-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+</style>

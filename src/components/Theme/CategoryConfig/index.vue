@@ -27,20 +27,20 @@
               v-if="!currentElem.tools.multipleCategory"
               class="w-full pr-2 text-right text-normal font-normal"
             >
-             {{ currentElem.category_title != null ? currentElem.category_title : 'دسته مورد نظر را انتخاب کنید' }}
+             {{ currentElem.category_title.length != 0 ? currentElem.category_title[0] : 'دسته مورد نظر را انتخاب کنید' }}
             </span>
             <span
               v-if="currentElem.tools.multipleCategory"
               class="w-full pr-2 text-right text-normal font-normal"
             >
-             {{ currentElem.category_title != null ? currentElem.category_title.join(",") : 'دسته مورد نظر را انتخاب کنید' }}
+             {{ currentElem.category_title.length != 0 ? currentElem.category_title.join(",") : 'دسته مورد نظر را انتخاب کنید' }}
             </span>
             <i
               class="fa-duotone fa-angle-down text-[14px] ml-1 w-4 h-3 leading-[20px]"
             ></i>
           </button>
           <div
-            class="categories absolute top-18 z-10 mt-2 bg-white border rounded-lg w-full p-3"
+            class="categories h-[300px] overflow-y-scroll absolute top-18 z-10 mt-2 bg-white border rounded-lg w-full p-3"
             v-if="focused == true"
           >
             <ul class="rounded-lg">
@@ -60,14 +60,9 @@
                 <i class="fa-chevron-left ml-1 fa-light text-[15px] text-hamian"></i>
                 <span class="inline-block mr-1 hover:text-hamian transition-all">{{ category.title }}</span>
 
-                <span v-if="!currentElem.tools.multipleCategory">
+                <span>
                     <i
-                        v-if="currentElem.category_id == category.id"
-                        class="fa-check ml-1 fa-light text-[15px] text-hamian absolute left-3 top-2"></i>
-                </span>
-                <span v-if="currentElem.tools.multipleCategory">
-                    <i
-                        v-if="currentElem.category_id != null && currentElem.category_id.includes(category.id)"
+                        v-if="currentElem.category_id.length != 0 && currentElem.category_id.includes(category.id)"
                         class="fa-check ml-1 fa-light text-[15px] text-hamian absolute left-3 top-2"></i>
                 </span>
                 
@@ -81,14 +76,9 @@
                     <i class="fa-chevron-left ml-1 fa-light text-[15px] text-hamian"></i>
                     <span class="inline-block mr-1 hover:text-hamian transition-all">{{ levelTwoCat.title }}</span>
 
-                    <span v-if="!currentElem.tools.multipleCategory">
+                    <span>
                         <i
-                            v-if="currentElem.category_id == levelTwoCat.id"
-                            class="fa-check ml-1 fa-light text-[15px] text-hamian absolute left-3 top-2"></i>
-                    </span>
-                    <span v-if="currentElem.tools.multipleCategory">
-                        <i
-                            v-if="currentElem.category_id != null && currentElem.category_id.includes(levelTwoCat.id)"
+                            v-if="currentElem.category_id.length != 0 && currentElem.category_id.includes(levelTwoCat.id)"
                             class="fa-check ml-1 fa-light text-[15px] text-hamian absolute left-3 top-2"></i>
                     </span>
 
@@ -102,14 +92,9 @@
                         <i class="fa-chevron-left ml-1 fa-light text-[15px] text-hamian"></i>
                         <span class="inline-block mr-1 hover:text-hamian transition-all">{{ levelThreeCat.title }}</span>
 
-                        <span v-if="!currentElem.tools.multipleCategory">
+                        <span>
                             <i
-                                v-if="currentElem.category_id == levelThreeCat.id"
-                                class="fa-check ml-1 fa-light text-[15px] text-hamian absolute left-3 top-2"></i>
-                        </span>
-                        <span v-if="currentElem.tools.multipleCategory">
-                            <i
-                                v-if="currentElem.category_id != null && currentElem.category_id.includes(levelThreeCat.id)"
+                                v-if="currentElem.category_id.length != 0 && currentElem.category_id.includes(levelThreeCat.id)"
                                 class="fa-check ml-1 fa-light text-[15px] text-hamian absolute left-3 top-2"></i>
                         </span>
                       </li>

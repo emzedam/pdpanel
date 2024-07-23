@@ -263,8 +263,8 @@
                 ><i class="pl-2 text-2xl text-white fa-duotone fa-arrow-up-from-bracket"></i
                 ><span class="w-full">
                   {{ loading == true ? "در حال ایجاد ..." : "ایجاد کاربر" }}
-                </span></span
-              >
+                </span>
+              </span>
             </button>
           </div>
         </div>

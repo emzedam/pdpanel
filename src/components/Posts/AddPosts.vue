@@ -492,7 +492,7 @@
           >
             <span class="font-fa text-xs pb-2">نشانی اینترنتی:</span
             ><input
-            dir="ltr"
+              dir="ltr"
               class="border border-gray-200 text-left p-3 rounded-lg flex items-center cursor-text relative overflow-hidden"
               type="text"
               readonly
