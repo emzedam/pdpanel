@@ -174,11 +174,11 @@ const cloneEl = (item) => {
     }
 }
 
-const saveTemplate = () => {
+const saveTemplate = async () => {
   let validateResult = validateData();
   if(validateResult == true){
     loading.value = true
-    const result = store.dispatch("save_template" , templateContent.value.list2)
+    const result = await store.dispatch("save_template" , templateContent.value.list2)
     if (result.status == 200) {
       loading.value = false
       showSwal("موفقیت آمیز" , result.message , "success")

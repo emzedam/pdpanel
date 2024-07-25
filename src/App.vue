@@ -16,3 +16,10 @@ export default {
   },
 };
 </script>
+
+<style>
+
+.ck-editor__editable {
+  height: 250px;
+}
+</style>

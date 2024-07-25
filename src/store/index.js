@@ -1077,6 +1077,29 @@ const store = createStore({
                 "message": "failed"
             }
         }
+      },
+
+      async get_default_template(context , data) {
+        const token = cookies.get("_token")
+        const result = await HTTP.get("/admin/template/get-templates" ,{
+          headers: {
+            "Authorization": "Bearer "+ token
+          }
+        })
+
+        if(result.status == 200){
+            if(result.data){
+                return result.data
+            }else{
+                return {
+                    "message": "failed"
+                }
+            }
+        }else{
+            return {
+                "message": "failed"
+            }
+        }
       }
     },
 

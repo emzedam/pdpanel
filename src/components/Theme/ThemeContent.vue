@@ -97,6 +97,8 @@ const log = (evt) => {
 onMounted(() => {
     getCategories()
     getTags()
+
+    getDefaultTemplate()
 })
 
 
@@ -216,6 +218,39 @@ const showSwal = (title , text , icon) => {
     text: text,
     icon: icon
   });
+}
+
+const getDefaultTemplate = async () => {
+  const result = await store.dispatch("get_default_template")
+  if(result.status == 200) {
+    if(result.result!= null && result.result.length != 0) {
+      let itemId = 1
+      result.result.forEach((item , index) => {
+        list2.value.push({
+          id:    itemId++,
+          type:  item.type,
+          name:  item.name,
+          image: item.image,
+          tools: {
+            hasCategoryItem:  item.tools[0].hasCategoryItem,
+            multipleCategory: item.tools[0].multipleCategory,
+            hasTagItem:       item.tools[0].hasTagItem,
+            hasIconName:      item.tools[0].hasIconName,
+            hasTitle:         item.tools[0].hasTitle,
+            maxSelectCount:   item.tools[0].maxSelectCount,
+            isNewersOption:   item.tools[0].isNewersOption
+          },
+          category_id: item.category_id,
+          category_title: item.category_title,
+          tag_title: item.tag_title,
+          tag_id: item.tag_id,
+          title: item.title,
+          icon: item.icon,
+          isNewers: item.isNewers
+        }); 
+      });
+    }
+  }
 }
 
 defineExpose({
