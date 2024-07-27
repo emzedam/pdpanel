@@ -813,7 +813,6 @@ export default {
     clearData() {
       this.postData.title = ''
       this.postData.slug =''
-      this.postData.date = ''
       this.postData.category_id = null
       this.postData.content = ''
       this.postData.seo_image = ''
