@@ -169,6 +169,29 @@ const store = createStore({
         }
       },
 
+      async change_category_header_status(context , data) {
+        const token = cookies.get("_token")
+        const result = await HTTP.post("/admin/categories/set-header", data ,{
+          headers: {
+            "Authorization": "Bearer "+ token
+          }
+        })
+
+        if(result.status == 200){
+            if(result.data){
+                return result.data
+            }else{
+                return {
+                  "message": "failed"
+                }
+            }
+        }else{
+            return {
+                "message": "failed"
+            }
+        }
+      },
+
       // news
       async save_post_data(context , data){
         const token = cookies.get("_token")
