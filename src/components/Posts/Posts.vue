@@ -490,7 +490,7 @@
                               <td class="p-2 text-right mx-auto">
                                 <img
                                   :src="`${globalUrl}/storage/${row.image}`"
-                                  class="w-10 h-10 rounded-lg mx-auto"
+                                  class="w-10 h-10 rounded-lg mx-auto object-cover"
                                 />
                               </td>
 

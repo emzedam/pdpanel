@@ -191,11 +191,11 @@
                       for="account-number"
                       class="block text-sm font-medium text-gray-700 pb-1"
                     >
-                      آدرس تلگرام
+                     شماره تلفن
                     </label>
                     <div class="relative mt-1 rounded-md">
                       <input
-                        v-model="themData.telegram"
+                        v-model="themData.telphone"
                         type="text"
                         name="account-number"
                         id="account-number"
@@ -251,7 +251,7 @@ export default {
       themData: {
         aboutus: "",
         email: "",
-        telegram: "",
+        telphone: "",
       },
       siteLogoSrc: "",
       loading: false,
