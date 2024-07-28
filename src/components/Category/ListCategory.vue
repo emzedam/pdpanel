@@ -857,11 +857,11 @@ export default {
         }
       });
     },
-    do_change_special_state(state , id , index) {
+    do_change_header_status(state , id , index) {
       if(state == 0) {
         Swal.fire({
           title: "هشدار",
-          text: "آیا میخواهید این نوشته به لیست ویژه ها بپیوندد؟",
+          text: "آیا میخواهید این دسته بندی را به سربرگ اضافه کنید؟",
           icon: "warning",
           showCancelButton: true,
           confirmButtonColor: "#9d2c48",
@@ -884,7 +884,7 @@ export default {
       }else {
         Swal.fire({
           title: "هشدار",
-          text: "آیا میخواهید این نوشته از لیست ویژه ها حذف شود؟",
+          text: "آیا میخواهید این دسته بندی را از سربرگ حذف کنید؟",
           icon: "warning",
           showCancelButton: true,
           confirmButtonColor: "#9d2c48",
