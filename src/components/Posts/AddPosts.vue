@@ -709,6 +709,7 @@ export default {
         }
     },
     set_news_title(e) {
+      console.log(e.target.value)
       this.postData.title = e.target.value;
       this.postData.slug = this.generateSlug(this.postData.title);
     },

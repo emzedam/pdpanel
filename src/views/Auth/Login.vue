@@ -12,7 +12,7 @@
                             <i class="fa fa-user animate-shake hover:animate-shake animate-flash"></i>
                         </div>
 
-                        <h2 class="mt-8 text-2xl font-bold tracking-tight text-gray-900">ورود به مدیریت حامیان پت
+                        <h2 class="mt-8 text-2xl font-bold tracking-tight text-gray-900">ورود به مدیریت وبلاگ پت و من
                         </h2>
                         <p class="mt-4 text-xs text-gray-600">
 
@@ -101,7 +101,7 @@
                 </div>
             </div>
             <div class="relative hidden  lg:flex lg:items-center lg:justify-center w-full h-screen bg-hamian/10">
-                <p class="text-6xl font-bold text-orange-500">پت دانیم</p>
+                <petomanLogo class="w-[300px]" />
             </div>
         </div>
     </main>
@@ -109,8 +109,12 @@
 </template>
 
 <script>
+import petomanLogo from '@/assets/images/petoman-logo.svg'
 export default {
   name: "Login",
+  components: {
+    petomanLogo
+  },
   data() {
     return {
       error: "",

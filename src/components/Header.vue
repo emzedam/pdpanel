@@ -1,7 +1,8 @@
 <template>
   <header>
     <!-- Navbar -->
-    <nav
+    <nav 
+      v-if="authadmin != null"
       :class="NavMenu == true ? 'lg:mr-72 mr-0' : 'lg:mr-0 mr-0'"
       class="z-50 fixed flex flex-row flex-nowrap items-center justify-between mt-0 py-2 start-0 end-0 px-6 backdrop-blur bg-white/80 supports-backdrop-blur:bg-white/40 dark:bg-gray-800/80 border-b transition-all duration-500 ease-in-out ms-0"
       id="desktop-menu"
@@ -25,32 +26,14 @@
       </button>
 
       <!-- Search -->
-      <form class="hidden sm:inline-block md:hidden lg:inline-block mx-5">
-        <div class="flex flex-wrap items-stretch w-full relative">
-          <div class="flex -mr-px">
-            <button
-              class="flex items-center py-2 px-4 ltr:-ml-1 rtl:-mr-1 ltr:rounded-r rtl:rounded-l leading-5 text-gray-500 text-2xl"
-              type="button"
-            >
-              <i class="fa-light fa-search"></i>
-            </button>
-          </div>
 
-          <input
-            type="text"
-            class="ltr text-right flex-shrink flex-grow max-w-full leading-5 relative text-sm py-2 px-4 ltr:rounded-l rtl:rounded-r text-gray-800 overflow-x-auto focus:outline-none focus:ring-0 dark:text-gray-400 border-0"
-            placeholder=" (Ctrl+/)  جستجو "
-            aria-label="Search"
-          />
-        </div>
-      </form>
 
       <!-- menu -->
       <ul class="flex ltr:ml-auto rtl:mr-auto mt-2 font-fas">
         <!-- Customizer (Only for demo purpose) -->
         <li class="relative">
           <a
-            href="https://hamian.petoman.com"
+            href="https://blog.petoman.com"
             target="_blank"
             class="py-3 px-4 flex text-sm rounded-full focus:outline-none"
           >
@@ -60,18 +43,14 @@
         </li>
 
         <li class="relative">
-          <a
-            href=""
+          <router-link
+            to="/add-posts"
+            title="افزودن سریع نوشته"
             class="py-3 px-4 flex text-sm rounded-full focus:outline-none"
           >
-            <div class="relative inline-block">
-              <i class="text-2xl fa-light fa-credit-card"></i>
-              <span
-                class="flex justify-center absolute -top-2 ltr:-right-1 rtl:-left-1 text-center bg-orange-500 px-1 text-white rounded-full text-xs"
-                ><span class="align-self-center">3</span></span
-              >
-            </div>
-          </a>
+            <span class="sr-only">add post</span>
+            <i class="text-2xl fa-light fa-plus"></i>
+          </router-link>
         </li>
 
         <!-- messages -->
@@ -113,7 +92,14 @@
                   <div class="flex-shrink max-w-full px-2 w-1/4 text-center">
                     <div class="relative">
                       <img
+                        v-if="authadmin.profile == null"
                         src="@/assets/images/avatar.png"
+                        class="h-10 w-10 rounded-full mx-auto"
+                        alt="Daniel Esteban"
+                      />
+                      <img
+                        v-else
+                        :src="`${globalUrl}/storage/admin/${authadmin.profile}`"
                         class="h-10 w-10 rounded-full mx-auto"
                         alt="Daniel Esteban"
                       />
@@ -139,7 +125,14 @@
                   <div class="flex-shrink max-w-full px-2 w-1/4 text-center">
                     <div class="relative">
                       <img
+                        v-if="authadmin.profile == null"
                         src="@/assets/images/avatar.png"
+                        class="h-10 w-10 rounded-full mx-auto"
+                        alt="Carlos Garcia"
+                      />
+                      <img
+                        v-else
+                        :src="`${globalUrl}/storage/admin/${authadmin.profile}`"
                         class="h-10 w-10 rounded-full mx-auto"
                         alt="Carlos Garcia"
                       />
@@ -175,8 +168,15 @@
           >
             <div class="relative">
               <img
+                v-if="authadmin.profile == null"
                 class="h-10 w-10 rounded-full border border-gray-700 bg-gray-700"
                 src="@/assets/images/avatar.png"
+                alt="avatar"
+              />
+              <img
+                v-else
+                class="h-10 w-10 rounded-full border border-gray-700 bg-gray-700"
+                :src="`${globalUrl}/storage/admin/${authadmin.profile}`"
                 alt="avatar"
               />
               <span
@@ -207,7 +207,7 @@
                     >
                   </div>
                   <router-link
-                    :to="`/profile/${authadmin.id}`"
+                    :to="`/admin/profile/${authadmin.id}`"
                     class="text-gray text-sm mt-1 text-cyan-500 font-semibold"
                     >مشاهده پروفایل</router-link>
                 </div>
@@ -241,7 +241,7 @@
               <li class="relative">
                 <router-link
                   class="flex items-center w-full py-4 px-6 clear-both whitespace-nowrap hover:text-cyan-500"
-                  :to="`/profile/${authadmin.id}`"
+                  :to="`/admin/profile/${authadmin.id}`"
                 >
                   <i class="inline ltr:mr-2 rtl:ml-2 fa-light fa-user"></i>
                   پروفایل
@@ -322,7 +322,7 @@
           confirmButtonText: "بله",
         }).then(async (result) => {
           if (result.isConfirmed) {
-            const result = await store.dispatch("logout_supporter")
+            const result = await store.dispatch("do_logout_admin")
             if(result.status == 200){
               window.location.href="/login"
             }else{

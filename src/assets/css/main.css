@@ -977,11 +977,6 @@ select {
   margin-right: 1rem;
 }
 
-.mx-5 {
-  margin-left: 1.25rem;
-  margin-right: 1.25rem;
-}
-
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
@@ -1335,10 +1330,6 @@ select {
   width: 1.25rem;
 }
 
-.w-64 {
-  width: 16rem;
-}
-
 .w-7 {
   width: 1.75rem;
 }
@@ -1373,6 +1364,26 @@ select {
 
 .w-full {
   width: 100%;
+}
+
+.w-\[200px\] {
+  width: 200px;
+}
+
+.w-\[100px\] {
+  width: 100px;
+}
+
+.w-\[80px\] {
+  width: 80px;
+}
+
+.w-\[150px\] {
+  width: 150px;
+}
+
+.w-\[300px\] {
+  width: 300px;
 }
 
 .min-w-full {
@@ -1531,10 +1542,6 @@ select {
 
 .grid-cols-6 {
   grid-template-columns: repeat(6, minmax(0, 1fr));
-}
-
-.grid-cols-7 {
-  grid-template-columns: repeat(7, minmax(0, 1fr));
 }
 
 .grid-cols-8 {
@@ -2395,10 +2402,6 @@ select {
 
 .italic {
   font-style: italic;
-}
-
-.leading-5 {
-  line-height: 1.25rem;
 }
 
 .leading-6 {
@@ -3648,10 +3651,6 @@ nav .fa-light {
     margin-top: 1px;
   }
 
-  .sm\:inline-block {
-    display: inline-block;
-  }
-
   .sm\:grid {
     display: grid;
   }
@@ -3739,10 +3738,6 @@ nav .fa-light {
     display: grid;
   }
 
-  .md\:hidden {
-    display: none;
-  }
-
   .md\:grid-cols-1 {
     grid-template-columns: repeat(1, minmax(0, 1fr));
   }
@@ -3815,10 +3810,6 @@ nav .fa-light {
 
   .lg\:block {
     display: block;
-  }
-
-  .lg\:inline-block {
-    display: inline-block;
   }
 
   .lg\:flex {
@@ -3978,26 +3969,12 @@ nav .fa-light {
   right: 0.5rem;
 }
 
-.ltr\:-ml-1:where([dir="ltr"], [dir="ltr"] *) {
-  margin-left: -0.25rem;
-}
-
 .ltr\:ml-auto:where([dir="ltr"], [dir="ltr"] *) {
   margin-left: auto;
 }
 
 .ltr\:mr-2:where([dir="ltr"], [dir="ltr"] *) {
   margin-right: 0.5rem;
-}
-
-.ltr\:rounded-l:where([dir="ltr"], [dir="ltr"] *) {
-  border-top-left-radius: 0.25rem;
-  border-bottom-left-radius: 0.25rem;
-}
-
-.ltr\:rounded-r:where([dir="ltr"], [dir="ltr"] *) {
-  border-top-right-radius: 0.25rem;
-  border-bottom-right-radius: 0.25rem;
 }
 
 .ltr\:text-left:where([dir="ltr"], [dir="ltr"] *) {
@@ -4030,26 +4007,12 @@ nav .fa-light {
   left: 0.5rem;
 }
 
-.rtl\:-mr-1:where([dir="rtl"], [dir="rtl"] *) {
-  margin-right: -0.25rem;
-}
-
 .rtl\:ml-2:where([dir="rtl"], [dir="rtl"] *) {
   margin-left: 0.5rem;
 }
 
 .rtl\:mr-auto:where([dir="rtl"], [dir="rtl"] *) {
   margin-right: auto;
-}
-
-.rtl\:rounded-l:where([dir="rtl"], [dir="rtl"] *) {
-  border-top-left-radius: 0.25rem;
-  border-bottom-left-radius: 0.25rem;
-}
-
-.rtl\:rounded-r:where([dir="rtl"], [dir="rtl"] *) {
-  border-top-right-radius: 0.25rem;
-  border-bottom-right-radius: 0.25rem;
 }
 
 .rtl\:text-right:where([dir="rtl"], [dir="rtl"] *) {

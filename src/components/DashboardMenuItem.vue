@@ -6,22 +6,23 @@
         :class="NavMenu == true ? 'w-full translate-x-0 transition-opacity' : 'hidden'"
       ></span>
     <nav
-      :class="NavMenu == true ? 'translate-x-0 w-64' : 'translate-x-80'"
+      :class="NavMenu == true ? 'translate-x-0 w-72' : 'translate-x-80'"
       class="p-3 fixed transition-all duration-500 ease-in-out h-screen bg-white/90 dark:bg-gray-800/90 border-l z-[1000] right-0 top-0"
     >
       <div class="h-full overflow-y-auto scrollbars">
         <!--logo-->
-        <div class="mh-18 text-center py-5">
-          <a href="#" class="relative">
+        <div class="text-center py-5">
+          <router-link to="/" class="relative">
             <h2
-              class="text-2xl font-semibold text-gray-200 px-4 max-h-9 overflow-hidden hidden-compact"
+              class="text-2xl font-semibold text-gray-200 px-4 h-auto  hidden-compact"
             >
-              <img
+              <!-- <img
                 class="inline-block w-20 h-auto ltr:mr-2 rtl:ml-2 -mt-1"
-                src="@/assets/images/petman.png"
-              />
+                src="@/assets/images/petoman-logo.svg"
+              /> -->
+              <petomanLogo class="inline-block w-[150px] ltr:mr-2 rtl:ml-2 -mt-1"/> 
             </h2>
-          </a>
+          </router-link>
         </div>
   
         <!-- Sidebar menu -->
@@ -387,6 +388,7 @@
 
 <script setup>
 import {ref , onMounted , computed} from 'vue'
+import petomanLogo from '@/assets/images/petoman-logo.svg'
 import { useStore } from 'vuex';
 const props = defineProps(["NavMenu"]);
 const emit = defineEmits(["close_navmenu_action"]);
