@@ -65,7 +65,7 @@
               <i class="text-2xl fa-light fa-bell"></i>
               <span
                 class="flex justify-center absolute -top-2 ltr:-right-1 rtl:-left-1 text-center bg-orange-500 px-1 text-white rounded-full text-xs"
-                ><span class="align-self-center">3</span></span
+                ><span class="align-self-center">{{ default_notifications.length + notifications.length }}</span></span
               >
             </div>
           </a>
@@ -83,77 +83,78 @@
               </div>
             </div>
             <div
+              
               class="max-h-60 overflow-y-auto scrollbars scrollbar-thin scrollbar-track-white scrollbar-thumb-slate-200"
             >
-              <a href="#">
-                <div
-                  class="flex flex-wrap flex-row items-center border-b border-gray-200 dark:border-gray-700 dark:bg-gray-900 dark:bg-opacity-80 dark:hover:bg-opacity-20 py-2 hover:bg-gray-100 bg-gray-100"
-                >
-                  <div class="flex-shrink max-w-full px-2 w-1/4 text-center">
-                    <div class="relative">
-                      <img
-                        v-if="authadmin.profile == null"
-                        src="@/assets/images/avatar.png"
-                        class="h-10 w-10 rounded-full mx-auto"
-                        alt="Daniel Esteban"
-                      />
-                      <img
-                        v-else
-                        :src="`${globalUrl}/storage/admin/${authadmin.profile}`"
-                        class="h-10 w-10 rounded-full mx-auto"
-                        alt="Daniel Esteban"
-                      />
-                      <span
-                        title="online"
-                        class="flex justify-center absolute -bottom-0.5 ltr:right-2 rtl:left-2 text-center bg-green-500 border border-white w-3 h-3 rounded-full"
-                      ></span>
+              <div v-if="notifications.length != 0">
+                <router-link to="/" v-for="(notification , index) in notifications" :key="index">
+                  <div
+                    class="flex flex-wrap flex-row items-center border-b border-gray-200 dark:border-gray-700 dark:bg-gray-900 dark:bg-opacity-80 dark:hover:bg-opacity-20 py-2 hover:bg-gray-100 bg-gray-100"
+                  >
+                    <div class="flex-shrink max-w-full px-2 w-1/4 text-center">
+                      <div class="relative">
+                        <img
+                          v-if="notification.profile == null"
+                          src="/useravatar.webp"
+                          class="h-12 w-12 rounded-full mx-auto"
+                          alt="Daniel Esteban"
+                        />
+                        <img
+                          v-else
+                          :src="`${globalUrl}/storage/avatars/${notification.profile}`"
+                          class="h-10 w-10 rounded-full mx-auto"
+                          alt="Daniel Esteban"
+                        />
+                      </div>
+                    </div>
+                    <div class="flex-shrink max-w-full px-2 w-3/4">
+                      <div class="text-sm font-bold">{{ notification.name }} </div>
+                      <div class="text-gray-500 text-xs mt-1 truncate">
+                        {{ notification.post_title }}
+                      </div>
+                      <div class="text-gray-500 text-xs mt-1">چند لحظه پیش</div>
                     </div>
                   </div>
-                  <div class="flex-shrink max-w-full px-2 w-3/4">
-                    <div class="text-sm font-bold">تایید ثبت نام وبینار</div>
-                    <div class="text-gray-500 text-sm mt-1">
-                      ثبت نام شما در پتو من تایید شد
+                </router-link>
+              </div>
+              <div v-if="default_notifications.length != 0">
+                <router-link to="/" v-for="(notification , index) in default_notifications" :key="index">
+                  <div
+                    class="flex flex-wrap flex-row items-center border-b border-gray-200 dark:border-gray-700 dark:bg-gray-900 dark:bg-opacity-80 dark:hover:bg-opacity-20 py-2 hover:bg-gray-100 bg-gray-100"
+                  >
+                    <div class="flex-shrink max-w-full px-2 w-1/4 text-center">
+                      <div class="relative">
+                        <img
+                          v-if="notification.profile == null"
+                          src="/useravatar.webp"
+                          class="h-12 w-12 rounded-full mx-auto"
+                          alt="Daniel Esteban"
+                        />
+                        <img
+                          v-else
+                          :src="`${globalUrl}/storage/avatars/${notification.profile}`"
+                          class="h-10 w-10 rounded-full mx-auto"
+                          alt="Daniel Esteban"
+                        />
+                      </div>
                     </div>
-                    <div class="text-gray-500 text-sm mt-1">12 دقیقه پیش</div>
-                  </div>
-                </div>
-              </a>
-              <a href="#">
-                <div
-                  class="flex flex-wrap flex-row items-center border-b border-gray-200 dark:border-gray-700 dark:bg-gray-900 dark:bg-opacity-40 dark:hover:bg-opacity-20 py-2 hover:bg-gray-100 bg-gray-50"
-                >
-                  <div class="flex-shrink max-w-full px-2 w-1/4 text-center">
-                    <div class="relative">
-                      <img
-                        v-if="authadmin.profile == null"
-                        src="@/assets/images/avatar.png"
-                        class="h-10 w-10 rounded-full mx-auto"
-                        alt="Carlos Garcia"
-                      />
-                      <img
-                        v-else
-                        :src="`${globalUrl}/storage/admin/${authadmin.profile}`"
-                        class="h-10 w-10 rounded-full mx-auto"
-                        alt="Carlos Garcia"
-                      />
-                      <span
-                        title="busy"
-                        class="flex justify-center absolute -bottom-0.5 ltr:right-2 rtl:left-2 text-center bg-pink-500 border border-white w-3 h-3 rounded-full"
-                      ></span>
+                    <div class="flex-shrink max-w-full px-2 w-3/4">
+                      <div class="text-sm font-bold">{{ notification.name }} </div>
+                      <div class="text-gray-500 text-xs mt-1 truncate">
+                        {{ notification.title }}
+                      </div>
+                      <div class="text-gray-500 text-xs mt-1">{{ notification.date }}</div>
                     </div>
                   </div>
-                  <div class="flex-shrink max-w-full px-2 w-3/4">
-                    <div class="text-sm font-bold">تایید مدارک</div>
-                    <div class="text-gray-500 text-sm mt-1">
-                      مدارک شما در پتومن تایید شد
-                    </div>
-                    <div class="text-gray-500 text-sm mt-1">3 دقیقه پیش</div>
-                  </div>
-                </div>
-              </a>
+                </router-link>
+              </div>
+              <div v-else>
+                <p class="text-xs text-center pt-2 text-gray-500">در حال حاظر پیغام جدیدی وجود ندارد</p>
+              </div>
             </div>
+
             <div class="p-3 text-center font-normal">
-              <a href="#" class="hover:underline">مشاهده همه پیام ها</a>
+              <router-link  to="/notifications" class="hover:underline">مشاهده همه پیام ها</router-link>
             </div>
           </div>
         </li>
@@ -273,7 +274,7 @@
 </template>
 
 <script setup>
-    import {ref , onMounted , computed , inject} from 'vue'
+    import {ref , onMounted , computed , inject , watch} from 'vue'
     import {useStore} from 'vuex'
     import {useRouter} from 'vue-router'
     import Swal from 'sweetalert2'
@@ -284,27 +285,33 @@
     const profile = ref(false)
     const peyamha = ref(false)
     const router = useRouter()
+    const notifications = ref([])
+    const default_notifications = ref([])
+
+    onMounted(async () => {
+      const result = await store.dispatch('getDefaultNotifications' , {
+        state: "limit"
+      })
+      if(result.status == 200) {
+        default_notifications.value = result.result
+        console.log(default_notifications.value)
+      }
+    })
+
+    watch(() => store.getters["get_notifications"] , (newVal , oldVal) => {
+      notifications.value = newVal
+
+      const audio = new Audio('/sounds/notif-sound.mp3');
+      audio.play();
+
+      console.log(notifications.value)
+    })
 
     const authadmin = computed(() => {
       return store.getters["get_authadmin"]
     })
 
-    // const echo = inject('$echo');
-    // console.log(echo)
-    onMounted(() => {
-      // if (echo) {
-      //   echo.private('notifications')
-      //     .listen('PostNeedsApprovalEvent', (event) => {
-      //         console.log('A new post needs approval:', event);
-      //         // نمایش اعلان در داشبورد مدیریت
-      //     });
-      // }
-      // Echo.channel('notifications')
-      //   .listen('PostNeedsApproval', (event) => {
-      //       console.log('A new post needs approval:', event);
-      //       // نمایش اعلان در داشبورد مدیریت
-      //   });
-    })
+  
    
     const open_navmenu_action = () => {
       emit("open_navmenu_action");
@@ -339,4 +346,9 @@
         icon: icon
       });
     }
+
+    // const clear_notifications = () => {
+    //   default_notifications.value = []
+    //   store.commit("clear_notifications")
+    // }
 </script>

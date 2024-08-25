@@ -555,7 +555,7 @@ export default {
         "تعداد بازدید": {
           field: "review_count",
           callback: (value) => {
-            return value.length + " عدد";
+            return value + " عدد";
           },
         },
       },

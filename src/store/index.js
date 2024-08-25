@@ -7,6 +7,7 @@ const store = createStore({
     state () {
       return {
         authadmin: null,
+        notifications: []
       }
     },
 
@@ -15,6 +16,12 @@ const store = createStore({
         set_admin_token(state, user) {
             state.authadmin = user;
         },
+        add_notification(state , data) {
+          state.notifications = [data , ...state.notifications]
+        },
+        clear_notifications(state) {
+          state.notifications = []
+        }
     },
 
     // actions
@@ -1123,6 +1130,30 @@ const store = createStore({
                 "message": "failed"
             }
         }
+      },
+
+      async getDefaultNotifications(context , data) {
+        const token = cookies.get("_token")
+        const result = await HTTP.get("/admin/notifications/get-notifications" ,{
+          headers: {
+            "Authorization": "Bearer "+ token
+          },
+          params: data
+        })
+
+        if(result.status == 200){
+            if(result.data){
+                return result.data
+            }else{
+                return {
+                    "message": "failed"
+                }
+            }
+        }else{
+            return {
+                "message": "failed"
+            }
+        }
       }
     },
 
@@ -1131,6 +1162,9 @@ const store = createStore({
       get_authadmin(state){
           return state.authadmin
       },
+      get_notifications(state) {
+        return state.notifications
+      }
     }
 })
 

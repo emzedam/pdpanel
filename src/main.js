@@ -5,7 +5,6 @@ import App from './App.vue'
 import router from "./router";
 import VueCookies from 'vue3-cookies'
 import { useCookies } from "vue3-cookies";
-const { cookies } = useCookies();
 import axios from '@/axios'
 import store from './store/index.js'
 import Default from '@/layouts/Default.vue'
@@ -19,29 +18,20 @@ import CKEditor from '@ckeditor/ckeditor5-vue';
 
 
 
-import Echo from 'laravel-echo';
-import Pusher from 'pusher-js';
+// import Echo from 'laravel-echo';
+// import Pusher from 'pusher-js';
 
-// const echo = new Echo({
-//     broadcaster: 'pusher',
-//     key: '87543cca355daa4c6d73',
+// window.Pusher = Pusher;
+
+// window.Echo = new Echo({
+//     broadcaster: "pusher",
+//     key: '565163eab3b900a7ff53',
 //     cluster: 'mt1',
 //     encrypted: true,
-//     authEndpoint: 'https://apiblog.petoman.com/broadcasting/auth',  // تنظیم مسیر صحیح احراز هویت
-//     auth: {
-//         headers: {
-//             Authorization: `Bearer ${cookies.get("_token")}` // اگر نیاز به توکن احراز هویت دارید
-//         }
-//     },
-//     forceTLS: false, // اگر از HTTPS استفاده نمی‌کنید
-//     wsHost: "https://apiblog.petoman.com", // آدرس سرور Laravel Echo Server شما
-//     wsPort: 6001,
-//     wssPort: 6001, // اگر از HTTPS استفاده می‌کنید
-//     disableStats: true,
-//     enabledTransports: ['ws', 'wss'], 
 // });
-
-
+    
+    
+const { cookies } = useCookies();
 const app = createApp(App)
 
 // app.provide('$echo', echo);

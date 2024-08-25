@@ -8,6 +8,7 @@ import Login from "../views/Auth/Login.vue";
 import HomeView from '../views/HomeView.vue'
 import SettingView from '../views/SettingView.vue'
 
+import NotificationsView from '../views/notifications/index.vue'
 // صفحات
 import AddPage from '../views/Pages/AddPageView.vue'
 import EditPage from '../views/Pages/EditPageView.vue'
@@ -186,6 +187,14 @@ const router = createRouter({
       path: '/edit-user/:id',
       name: 'EditUser',
       component: EditUser,
+      meta: { 
+        requiresAuth: true,
+        requiresRole: 1
+      }
+    }, {
+      path: '/notifications',
+      name: 'Notifications',
+      component: NotificationsView,
       meta: { 
         requiresAuth: true,
         requiresRole: 1
