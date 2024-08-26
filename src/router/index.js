@@ -26,6 +26,7 @@ import AdminsView from '../views/Admins/UsersView.vue'
 // کاربران
 import Users from '../views/Users/users.vue'
 import viewUser from '../views/Users/userView.vue'
+import postUser from '../views/Users/postUser.vue'
 import EditUser from '../views/Users/edit-user.vue'
 import AddUser from '../views/Users/add-new-user.vue'
 
@@ -187,6 +188,14 @@ const router = createRouter({
       path: '/edit-user/:id',
       name: 'EditUser',
       component: EditUser,
+      meta: { 
+        requiresAuth: true,
+        requiresRole: 1
+      }
+    }, {
+      path: '/users/post/:id',
+      name: 'postUser',
+      component: postUser,
       meta: { 
         requiresAuth: true,
         requiresRole: 1

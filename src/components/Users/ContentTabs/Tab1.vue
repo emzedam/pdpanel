@@ -424,7 +424,7 @@
                             </div>
 
                             <RouterLink
-                              :to="`/order/invoice/${row.id}`"
+                              :to="`/users/post/${row.id}`"
                               class="w-4 ml-4 transform cursor-pointer hover:text-gray-500 hover:scale-110"
                             >
                               <i
