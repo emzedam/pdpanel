@@ -145,8 +145,8 @@
                   <export-excel
                     :data="usersList"
                     :fields="excelFields"
-                    :title="`لیست مشتریان پارس گیفت   `"
-                    :name="`pgcustomers.xls`"
+                    :title="`لیست کاربران پت دانیم`"
+                    :name="`petdanimusers.xls`"
                   >
                     <li class="cursor-pointer">
                       <div

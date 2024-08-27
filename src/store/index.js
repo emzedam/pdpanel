@@ -1158,11 +1158,57 @@ const store = createStore({
 
       async get_user_post(context , data) {
         const token = cookies.get("_token")
-        const result = await HTTP.get("/admin/notifications/get-post" ,{
+        const result = await HTTP.get("/admin/users/get-post" ,{
           headers: {
             "Authorization": "Bearer "+ token
           },
           params: data
+        })
+
+        if(result.status == 200){
+            if(result.data){
+                return result.data
+            }else{
+                return {
+                    "message": "failed"
+                }
+            }
+        }else{
+            return {
+                "message": "failed"
+            }
+        }
+      },
+
+      async do_verify_post(context , data) {
+        const token = cookies.get("_token")
+        const result = await HTTP.post("/admin/users/verify-post" , data , {
+          headers: {
+            "Authorization": "Bearer "+ token
+          }
+        })
+
+        if(result.status == 200){
+            if(result.data){
+                return result.data
+            }else{
+                return {
+                    "message": "failed"
+                }
+            }
+        }else{
+            return {
+                "message": "failed"
+            }
+        }
+      },
+
+      async reject_user_post(context , data) {
+        const token = cookies.get("_token")
+        const result = await HTTP.post("/admin/users/reject-post" , data , {
+          headers: {
+            "Authorization": "Bearer "+ token
+          }
         })
 
         if(result.status == 200){

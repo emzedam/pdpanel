@@ -104,7 +104,7 @@
                           <div
                             class="text-sm leading-normal text-right text-gray-600 uppercase border-t border-gray-200"
                           >
-                            <div scope="col" class="px-6 py-3 font-semibold">سفارشات</div>
+                            <div scope="col" class="px-6 py-3 font-semibold">نوشته ها</div>
                           </div>
                         </div>
                         <dataset-item
@@ -196,7 +196,7 @@
                                                 <span
                                                   v-if="row.status == 1"
                                                   class="w-full py-2 mr-2 badge bg-label-success"
-                                                >تایید شده</span>
+                                                >منتشر شده</span>
                                                 <span
                                                   v-if="row.status == 2"
                                                   class="w-full py-2 mr-2 badge bg-label-danger"
@@ -219,21 +219,6 @@
                                               </div>
                                             </div>
 
-                                            <div
-                                              class="flex px-6 py-3 text-right border-b whitespace-nowrap"
-                                            >
-                                              <div
-                                                class="flex items-center text-base font-semibold"
-                                              >
-                                                تاریخ ایجاد:
-                                                <span
-                                                  class="mr-1 font-medium text-gray-400"
-                                                  >{{
-                                                    row.created_at
-                                                  }}</span
-                                                >
-                                              </div>
-                                            </div>
 
                                             <div
                                               class="flex px-6 py-3 text-right border-b whitespace-nowrap"
@@ -395,7 +380,7 @@
                             <span
                               v-if="row.status == 1"
                               class="w-full py-2 text-green-500"
-                              >تایید شده</span
+                              >منتشر شده</span
                             >
                             <span
                               v-if="row.status == 2"
@@ -548,7 +533,7 @@ export default {
             if (value == 0) {
               return "در انتظار تایید";
             } else if (value == 1) {
-              return "تایید شده";
+              return "منتشر شده";
             }
           },
         },
@@ -602,20 +587,21 @@ export default {
       else this.mobileSubmenuIndex = stateId;
     },
     doFilter(type) {
-      if (type == "paied") {
-        const filterOrders = this.filteredContainer.filter((val, index) => {
-          return val.is_payed == 1;
+      console.log(type)
+      if (type == 2) {
+        const filterPosts = this.filteredContainer.filter((val, index) => {
+          return val.status == 2;
         });
 
-        this.ordersList = filterOrders;
-      } else if (type == "unpaied") {
-        const filterOrders = this.filteredContainer.filter((val, index) => {
-          return val.is_payed == 0;
+        this.postsList = filterPosts;
+      } else if (type == 1) {
+        const filterPosts = this.filteredContainer.filter((val, index) => {
+          return val.status == 1;
         });
 
-        this.ordersList = filterOrders;
+        this.postsList = filterPosts;
       } else {
-        this.ordersList = this.filteredContainer;
+        this.postsList = this.filteredContainer;
       }
     },
     filterStart() {

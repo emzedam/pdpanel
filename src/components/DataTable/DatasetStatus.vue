@@ -30,17 +30,17 @@
                 <li>
                   <a
                     href="javascript:void(0)"
-                    @click="doFilter('paied')"
+                    @click="doFilter(2)"
                     class="block px-4 py-2 font-medium hover:bg-gray-100"
-                    >پرداخت شده</a
+                    >لغو شده ها</a
                   >
                 </li>
                 <li>
                   <a
                     href="javascript:void(0)"
-                    @click="doFilter('unpaied')"
+                    @click="doFilter(1)"
                     class="block px-4 py-2 font-medium hover:bg-gray-100"
-                    >پرداخت نشده</a
+                    >منتشر شده ها</a
                   >
                 </li>
                 
@@ -61,14 +61,8 @@ export default {
     },
     methods: {
         doFilter(type) {
-            this.Status = false
-            if (type == 'paied') {
-                this.$emit('doFilterStatus' , 'paied')
-            } else if (type == 'unpaied') {
-                this.$emit('doFilterStatus' , 'unpaied')
-            } else {
-                this.$emit('doFilterStatus' , 'all')
-            }
+          this.Status = false
+          this.$emit('doFilterStatus' , type)
         }
     }
 }

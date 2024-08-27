@@ -12,10 +12,10 @@
             </div>
             <div
               
-              class="max-h-60 overflow-y-auto scrollbars scrollbar-thin scrollbar-track-white scrollbar-thumb-slate-200"
+              class="max-h-600 overflow-y-auto scrollbars scrollbar-thin scrollbar-track-white scrollbar-thumb-slate-200"
             >
               <div v-if="notifications.length != 0">
-                <router-link to="/" v-for="(notification , index) in notifications" :key="index">
+                <router-link :to="`/users/post/${notification.post_id}`" v-for="(notification , index) in notifications" :key="index">
                   <div
                   :class="notification.read_at == null ? 'bg-gray-100' : ''"
                     class="flex flex-wrap flex-row justify-start items-center border-b border-gray-200 dark:border-gray-700 dark:bg-gray-900 dark:bg-opacity-80 dark:hover:bg-opacity-20 py-2 hover:bg-gray-100 "
