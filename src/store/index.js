@@ -1247,7 +1247,53 @@ const store = createStore({
                 "message": "failed"
             }
         }
-      }
+      },
+
+      async get_posts_states(context) {
+        const token = cookies.get("_token")
+        const result = await HTTP.get("/admin/states/get-post-states" ,{
+          headers: {
+            "Authorization": "Bearer "+ token
+          }
+        })
+
+        if(result.status == 200){
+            if(result.data){
+                return result.data
+            }else{
+                return {
+                    "message": "failed"
+                }
+            }
+        }else{
+            return {
+                "message": "failed"
+            }
+        }
+      },
+
+      async get_categories_states(context) {
+        const token = cookies.get("_token")
+        const result = await HTTP.get("/admin/states/get-categories-states" ,{
+          headers: {
+            "Authorization": "Bearer "+ token
+          }
+        })
+
+        if(result.status == 200){
+            if(result.data){
+                return result.data
+            }else{
+                return {
+                    "message": "failed"
+                }
+            }
+        }else{
+            return {
+                "message": "failed"
+            }
+        }
+      } 
     },
 
     // getters

@@ -14,6 +14,7 @@ import Vue3PersianDatetimePicker from 'vue3-persian-datetime-picker'
 
 import persionToEnglish from '../plugins/persionToEnglish.js'
 import CKEditor from '@ckeditor/ckeditor5-vue';
+import VueApexCharts from "vue3-apexcharts";
 
 
 
@@ -36,6 +37,7 @@ const app = createApp(App)
 
 // app.provide('$echo', echo);
 app.use(CKEditor);
+app.use(VueApexCharts);
 app.config.globalProperties.globalUrl = 'https://apiblog.petoman.com/'
 
 app.component("CollapseTransition", CollapseTransition);
