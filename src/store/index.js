@@ -1224,6 +1224,29 @@ const store = createStore({
                 "message": "failed"
             }
         }
+      },
+
+      async truncate_notifications(context) {
+        const token = cookies.get("_token")
+        const result = await HTTP.post("/admin/notifications/remove-all" , {} , {
+          headers: {
+            "Authorization": "Bearer "+ token
+          }
+        })
+
+        if(result.status == 200){
+            if(result.data){
+                return result.data
+            }else{
+                return {
+                    "message": "failed"
+                }
+            }
+        }else{
+            return {
+                "message": "failed"
+            }
+        }
       }
     },
 

@@ -149,7 +149,7 @@
                 </router-link>
               </div>
               <div v-else>
-                <p class="text-xs text-center pt-2 text-gray-500">در حال حاظر پیغام جدیدی وجود ندارد</p>
+                <p class="text-xs text-center py-5 text-gray-500">در حال حاظر اعلان جدیدی وجود ندارد</p>
               </div>
             </div>
 
