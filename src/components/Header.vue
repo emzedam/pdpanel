@@ -292,8 +292,8 @@
       return store.getters["get_authadmin"]
     })
 
-    onMounted(async () => {
-      if(authadmin.value != null) {
+    watch(() => authadmin.value , async (newVal , oldVal) => {
+      if(newVal != null) {
         const result = await store.dispatch('getDefaultNotifications' , {
           state: "limit"
         })
