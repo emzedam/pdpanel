@@ -288,8 +288,12 @@
     const notifications = ref([])
     const default_notifications = ref([])
 
+    const authadmin = computed(() => {
+      return store.getters["get_authadmin"]
+    })
+
     onMounted(async () => {
-      if(store.getters["get_authadmin"] != null) {
+      if(authadmin.value != null) {
         const result = await store.dispatch('getDefaultNotifications' , {
           state: "limit"
         })
@@ -306,9 +310,7 @@
       audio.play();
     })
 
-    const authadmin = computed(() => {
-      return store.getters["get_authadmin"]
-    })
+    
 
   
    
