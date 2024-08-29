@@ -289,12 +289,13 @@
     const default_notifications = ref([])
 
     onMounted(async () => {
-      const result = await store.dispatch('getDefaultNotifications' , {
-        state: "limit"
-      })
-      if(result.status == 200) {
-        default_notifications.value = result.result
-        console.log(default_notifications.value)
+      if(store.getters["get_authadmin"] != null) {
+        const result = await store.dispatch('getDefaultNotifications' , {
+          state: "limit"
+        })
+        if(result.status == 200) {
+          default_notifications.value = result.result
+        }
       }
     })
 
@@ -303,8 +304,6 @@
 
       const audio = new Audio('/sounds/notif-sound.mp3');
       audio.play();
-
-      console.log(notifications.value)
     })
 
     const authadmin = computed(() => {
