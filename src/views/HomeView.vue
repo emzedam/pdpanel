@@ -12,7 +12,7 @@
   
 </template>
 <script setup>
-import Pusher from 'pusher-js';
+
 import {onMounted , ref} from 'vue'
 import {useStore} from 'vuex'
 import AdminPostsChart from '@/components/HomeStates/AdminPostsChart.vue'
@@ -24,14 +24,7 @@ import UsersList from '@/components/HomeStates/UsersList.vue'
 
 const store = useStore()
 
-var pusher = new Pusher('9644a3ae6a42555d6252', {
-  cluster: 'mt1'
-});
 
-var channel = pusher.subscribe('releasePostChannel');
-channel.bind('releasePostEvent', function(data) {
-  store.commit("add_notification" , data)
-});
 
 const chartOptions = ref({
   chart: {

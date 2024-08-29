@@ -6,15 +6,30 @@
     </router-view>
   </component>
 </template>
-<script>
+<script setup>
+import {computed} from 'vue'
+import {useRoute} from 'vue-router'
+import Pusher from 'pusher-js';
+import {useStore} from 'vuex'
+
+const store = useStore()
 const default_layout = "default";
-export default {
-  computed: {
-    layout() {
-      return (this.$route.meta.layout || default_layout) + "-layout";
-    },
-  },
-};
+const route = useRoute()
+
+const layout = computed(() => {
+  return (route.meta.layout || default_layout) + "-layout";
+})
+
+var pusher = new Pusher('9644a3ae6a42555d6252', {
+  cluster: 'mt1'
+});
+
+var channel = pusher.subscribe('releasePostChannel');
+channel.bind('releasePostEvent', function(data) {
+  store.commit("add_notification" , data)
+});
+
+
 </script>
 
 <style>
