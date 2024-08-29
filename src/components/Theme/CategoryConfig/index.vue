@@ -55,14 +55,14 @@
               <li
                 class="py-1 text-gray-500 relative border border-gray-100 p-1 mt-2 cursor-pointer  px-2 rounded-md"
                 v-for="category in cat_search_result"
-                @click.stop="selectCategory(category.id , category.title)"
+                @click.stop="selectCategory(category.id.toString() , category.title)"
               >
                 <i class="fa-chevron-left ml-1 fa-light text-[15px] text-hamian"></i>
                 <span class="inline-block mr-1 hover:text-hamian transition-all">{{ category.title }}</span>
 
                 <span>
                     <i
-                        v-if="currentElem.category_id.length != 0 && currentElem.category_id.includes(category.id)"
+                        v-if="currentElem.category_id.length != 0 && currentElem.category_id.includes(category.id.toString())"
                         class="fa-check ml-1 fa-light text-[15px] text-hamian absolute left-3 top-2"></i>
                 </span>
                 
@@ -71,14 +71,14 @@
                   <li
                     class="py-1 relative text-gray-500 border border-gray-100  mt-2 cursor-pointer px-2 rounded-md"
                     v-for="levelTwoCat in category.childs"
-                    @click.stop="selectCategory(levelTwoCat.id , levelTwoCat.title)"
+                    @click.stop="selectCategory(levelTwoCat.id.toString() , levelTwoCat.title)"
                   >
                     <i class="fa-chevron-left ml-1 fa-light text-[15px] text-hamian"></i>
                     <span class="inline-block mr-1 hover:text-hamian transition-all">{{ levelTwoCat.title }}</span>
 
                     <span>
                         <i
-                            v-if="currentElem.category_id.length != 0 && currentElem.category_id.includes(levelTwoCat.id)"
+                            v-if="currentElem.category_id.length != 0 && currentElem.category_id.includes(levelTwoCat.id.toString())"
                             class="fa-check ml-1 fa-light text-[15px] text-hamian absolute left-3 top-2"></i>
                     </span>
 
@@ -87,14 +87,14 @@
                       <li
                         class="py-1 border relative border-gray-100  text-gray-500 mt-2 cursor-pointer  px-2 rounded-md"
                         v-for="levelThreeCat in levelTwoCat.childs"
-                        @click.stop="selectCategory(levelThreeCat.id , levelThreeCat.title)"
+                        @click.stop="selectCategory(levelThreeCat.id.toString() , levelThreeCat.title)"
                       >
                         <i class="fa-chevron-left ml-1 fa-light text-[15px] text-hamian"></i>
                         <span class="inline-block mr-1 hover:text-hamian transition-all">{{ levelThreeCat.title }}</span>
 
                         <span>
                             <i
-                                v-if="currentElem.category_id.length != 0 && currentElem.category_id.includes(levelThreeCat.id)"
+                                v-if="currentElem.category_id.length != 0 && currentElem.category_id.includes(levelThreeCat.id.toString())"
                                 class="fa-check ml-1 fa-light text-[15px] text-hamian absolute left-3 top-2"></i>
                         </span>
                       </li>

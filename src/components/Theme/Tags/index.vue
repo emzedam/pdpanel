@@ -48,14 +48,14 @@
               <li
                 class="py-1 text-gray-500 relative border border-gray-100 p-1 mt-2 cursor-pointer  px-2 rounded-md"
                 v-for="tag in tag_search_result"
-                @click.stop="selectTag(tag.id , tag.name)"
+                @click.stop="selectTag(tag.id.toString() , tag.name)"
               >
                 <i class="fa-hashtag ml-1 fa-light text-[15px] text-hamian"></i>
                 <span class="inline-block mr-1 hover:text-hamian transition-all">{{ tag.name }}</span>
 
                 <span>
                     <i
-                        v-if="currentElem.tag_id.length != 0 && currentElem.tag_id.includes(tag.id)"
+                        v-if="currentElem.tag_id.length != 0 && currentElem.tag_id.includes(tag.id.toString())"
                         class="fa-check ml-1 fa-light text-[15px] text-hamian absolute left-3 top-2"></i>
                 </span>
               </li>
@@ -83,7 +83,6 @@ const props = defineProps({
 })
 
 const focused = ref(false)
-
 
 const emit = defineEmits([
     "searchTag",
